@@ -101,6 +101,12 @@ COPY_GOOGLE_DOC_KEY = '1bR-KYOP7M5Y4DgEr4lvHwwEPIa3171FR5CIAr3PFagU'
 COPY_PATH = 'data/copy.xlsx'
 
 """
+SONG DATA
+"""
+SONGS_GOOGLE_DOC_KEY = '1Egm-N9uQBAAq6aEAZEJKB-iwd2TPlZFzHK9H2MHONbg'
+SONGS_CSV_DATA_PATH = 'data/songs.csv'
+
+"""
 SHARING
 """
 SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET['bucket_name'], PROJECT_SLUG)
@@ -150,6 +156,119 @@ authomatic_config = {
 }
 
 authomatic = Authomatic(authomatic_config, os.environ.get('AUTHOMATIC_SALT'))
+
+"""
+SONGZ
+"""
+GENRE_TAGS = [
+    'Classical',
+    'Country/Americana',
+    'Electronic',
+    'Hip-Hop',
+    'Jazz',
+    'Latin',
+    'Pop',
+    'R&B',
+    'Rock',
+    '\m/ >_< \m/',
+    'World'
+]
+
+REVIEWER_TAGS = [
+    'Bob Boilen',
+    'Robin Hilton',
+    'Ann Powers',
+    
+    'Rita Houston',
+    'Jason Bentley',
+    'Kevin Cole',
+
+    'Jason King',
+    'Felix Contreras',
+    'Jasmine Garsd',
+
+    'David Dye',
+    'Stephen Thompson',
+    'Anastasia Tsioulcas',
+
+    'Tom Huizenga',
+    'Patrick Jarenwattananon',
+    'Frannie Kelley',
+
+    'Lars Gotrich',
+]
+
+REVIEWER_IMAGES = {
+    # With playlists
+    'Bob Boilen': 'bob.jpg',
+    'Robin Hilton': 'robin.jpg',
+    'Ann Powers': 'ann.jpg',
+    'Stephen Thompson': 'sthompson.jpg',
+    'Anastasia Tsioulcas': 'tsioulcas.jpg',
+    'Tom Huizenga': 'huizenga.jpg',
+    'Patrick Jarenwattananon': 'jarenwattananon.jpg',
+    'Lars Gotrich': 'lars.jpg',
+    'Frannie Kelley': 'kelley.jpg',
+    'Jason King': 'jason-king.jpg',
+    'Felix Contreras': 'contreras.jpg',
+    'Jasmine Garsd': 'jasmine-garsd.jpg',
+    'Jason Bentley': 'jason-bentley.jpg',
+    'David Dye': 'david-dye.jpg',
+    'Rita Houston': 'rita-houst.jpg',
+    'Kevin Cole': 'kevin-cole.jpg',
+
+    # Without playlists
+    'Otis Hart': 'otis-hart.jpg',
+    'Jacob Ganz': 'jacob.jpg',
+    'Kiana Fitzgerald': 'kiana.jpg',
+    'Bobby Carter': 'bobby-carter.jpg',
+    'Cedric Shine': 'cedric-shine.jpg',
+    'Mike Katzif': 'mike-katzif.jpg',
+    'Kelly McCartney': 'kelly-mccartney.jpg'
+}
+
+REVIEWER_BIOS = {
+    'Bob Boilen': 'Creator/host All Songs Considered and Tiny Desk Concerts',
+    'Robin Hilton': 'Co-host, All Songs Considered. Crying on the outside; laughing on the inside',
+    'Ann Powers': 'Critic, meaning-monger, melody freak',
+    'Stephen Thompson': 'Likes writing, talking, melancholy, misanthropy, these songs, you',
+    'Anastasia Tsioulcas': 'Co-host of the blog Deceptive Cadence, musical omnivore',
+    'Tom Huizenga': 'Co-host of the blog Deceptive Cadence, ears wide open',
+    'Patrick Jarenwattananon': 'Jazz producer with an Internet connection',
+    'Lars Gotrich': 'Beer drinker, BBQ eater',
+    'Frannie Kelley': 'Editor and co-host of Microphone Check',
+    'Jason King': 'Host and curator of NPR&B',
+    'Felix Contreras': 'Dad, drummer, Deadhead',
+    'Jasmine Garsd': 'Co-host of NPR&rsquo;s Alt.Latino',
+    'Jason Bentley': 'Music director at KCRW and host of Morning Becomes Eclectic',
+    'David Dye': 'Host of WXPN&rsquo;s World Cafe',
+    'Rita Houston': 'Program director at WFUV in New York City',
+    'Kevin Cole': 'Program director and host at KEXP in Seattle',
+}
+
+WELCOME_AUDIO = '/npr/specialmusic/2014/12/20141208_specialmusic_welcome.mp3'
+
+TAG_AUDIO_INTROS = {
+    'Bob Boilen': '/npr/specialmusic/2014/12/20141208_specialmusic_bob.mp3',
+    'Robin Hilton': '/npr/specialmusic/2014/12/20141208_specialmusic_robin.mp3',
+    'Ann Powers': '/npr/specialmusic/2014/12/20141208_specialmusic_ann.mp3',
+    'Stephen Thompson': '/npr/specialmusic/2014/12/20141208_specialmusic_stephen.mp3',
+    'Anastasia Tsioulcas': '/npr/specialmusic/2014/12/20141208_specialmusic_anastasia.mp3',
+    'Tom Huizenga': '/npr/specialmusic/2014/12/20141208_specialmusic_tom.mp3',
+    'Patrick Jarenwattananon': '/npr/specialmusic/2014/12/20141208_specialmusic_patrick.mp3',
+    'Lars Gotrich': '/npr/specialmusic/2014/12/20141208_specialmusic_lars.mp3',
+    'Frannie Kelley': '/npr/specialmusic/2014/12/20141208_specialmusic_frannie.mp3',
+    'Jason King': '/npr/specialmusic/2014/12/20141208_specialmusic_jason.mp3',
+    'Felix Contreras': '/npr/specialmusic/2014/12/20141208_specialmusic_felix.mp3',
+    'Jasmine Garsd': '/npr/specialmusic/2014/12/20141208_specialmusic_jasmine.mp3',
+    'Jason Bentley': '/npr/specialmusic/2014/12/20141209_specialmusic_jasonbentleycurator.mp3',
+    'David Dye': '/npr/specialmusic/2014/12/20141208_specialmusic_david.mp3',
+    'Rita Houston': '/npr/specialmusic/2014/12/20141208_specialmusic_rita.mp3',
+    'Kevin Cole': '/npr/specialmusic/2014/12/20141208_specialmusic_kevin.mp3',
+}
+
+SKIP_LIMIT = 6
+
 
 """
 Utilities
