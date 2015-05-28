@@ -1214,6 +1214,24 @@ h1,h2,h3,h4,h5,h6 {
 		margin: 0 auto;
 	}
 
+    .btn-group label.btn.btn-default {
+        margin-bottom: @line-height-computed;
+        font-size: @font-size-small;
+        text-transform: uppercase;
+    }
+
+    label.btn.btn-default.active.explicit {
+        background: @brand-success;
+        border-color: @brand-success;
+        color: #fff;
+    }
+
+    label.btn.btn-default.active.clean {
+        background: @brand-danger;
+        border-color: @brand-danger;
+        color: #fff;
+    }
+
 	h3 {
 		color: #222;
 		text-transform: uppercase;
@@ -1232,6 +1250,8 @@ h1,h2,h3,h4,h5,h6 {
 			font-weight: bold;
 		}
 	}
+
+
 
 	.tools {
 		overflow: hidden;

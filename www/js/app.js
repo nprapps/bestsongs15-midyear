@@ -3,6 +3,7 @@ var $html = null;
 var $body = null;
 var $shareModal = null;
 var $goButton = null;
+var $goCleanButton = null;
 var $continueButton = null;
 var $audioPlayer = null;
 var $playerArtist = null;
@@ -29,6 +30,9 @@ var $currentDj = null;
 var $fixedControls = null;
 var $historyButton = null;
 var $skipsRemaining = null;
+var $languageToggle = null;
+var $explicitButton = null;
+var $cleanButton = null;
 
 // URL params
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -53,6 +57,7 @@ var fixedHeaderHeight = null;
 var is_small_screen = false
 var inPreroll = false;
 var firstReviewerSong = false;
+var playExplicit = null;
 
 /*
  * Run on page load.
@@ -63,6 +68,7 @@ var onDocumentLoad = function(e) {
     $body = $('body');
     $shareModal = $('#share-modal');
     $goButton = $('.go');
+    $goCleanButton = $('.go-clean');
     $continueButton = $('.continue');
     $audioPlayer = $('#audio-player');
     $songs = $('.songs');
@@ -90,6 +96,7 @@ var onDocumentLoad = function(e) {
     $fixedControls = $('.fixed-controls');
     $historyButton = $('.js-show-history');
     $skipsRemaining = $('.skips-remaining');
+    $languageToggle = $('.language-toggle');
     onWindowResize();
     $landing.show();
 
@@ -97,6 +104,7 @@ var onDocumentLoad = function(e) {
     $shareModal.on('shown.bs.modal', onShareModalShown);
     $shareModal.on('hidden.bs.modal', onShareModalHidden);
     $goButton.on('click', onGoButtonClick);
+    $goCleanButton.on('click', onGoCleanButtonClick);
     $continueButton.on('click', onContinueButtonClick);
     $genreFilters.on('click', onGenreClick);
     $reviewerFilters.on('click', onReviewerClick);
@@ -115,6 +123,7 @@ var onDocumentLoad = function(e) {
     $songs.on('click', '.song-tools .spotify', onSpotifyClick);
     $songs.on('click', '.byline .reviewer-link', onReviewerLinkClick);
     $landing.on('click', '.poster.shrink', onFilterTipClick);
+    $languageToggle.find('label').on('click', onLanguageChange);
 
     // configure ZeroClipboard on share panel
     ZeroClipboard.config({ swfPath: 'js/lib/ZeroClipboard.swf' });
@@ -582,6 +591,13 @@ var loadState = function() {
     usedSkips = simpleStorage.get('usedSkips') || [];
     totalSongsPlayed = simpleStorage.get('totalSongsPlayed') || 0;
     songHistory = simpleStorage.get('songHistory') || {};
+    playExplicit = simpleStorage.get('playExplicit') !== undefined ? simpleStorage.get('playExplicit') : true;
+
+    if (playExplicit === false) {
+        $languageToggle.find('.clean').button('toggle');
+    } else {
+        $languageToggle.find('.explicit').button('toggle');
+    }
 
     if (ALL_HISTORY) {
         for (var i=1; i < SONG_DATA.length; i++) {
@@ -616,6 +632,7 @@ var resetState = function() {
     simpleStorage.set('playedSongs', playedSongs);
     simpleStorage.set('selectedTag', selectedTag);
     simpleStorage.set('playedPreroll', false);
+    simpleStorage.set('playExplicit', true);
 }
 
 /*
@@ -662,10 +679,19 @@ var buildListeningHistory = function() {
  * Build a playlist from a set of tags.
  */
 var buildPlaylist = function() {
+    var currentSongData = SONG_DATA;
+
+    // Remove explicit songs if clean mode is active
+    if (playExplicit === false) {
+        currentSongData = _.reject(SONG_DATA, function(song) {
+            return song['explicit'] === 'TRUE';
+        })
+    }
+
     if (selectedTag === null) {
-        playlist = SONG_DATA;
+        playlist = currentSongData;
     } else {
-        playlist = _.filter(SONG_DATA, function(song) {
+        playlist = _.filter(currentSongData, function(song) {
             var tags = song['genre_tags'].concat(song['curator_tags']);
 
             for (var i = 0; i < tags.length; i++) {
@@ -899,6 +925,42 @@ var onGoButtonClick = function(e) {
     playIntroAudio();
 
     _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'shuffle']);
+}
+
+/*
+ * Begin clean shuffled playback from the landing screen.
+ */
+var onGoCleanButtonClick = function(e) {
+    e.preventDefault();
+
+    playExplicit = false;
+    simpleStorage.set('playExplicit', playExplicit);
+
+
+    onGoButtonClick(e);
+}
+
+/*
+ * Begin clean shuffled playback from the landing screen.
+ */
+var onLanguageChange = function(e) {
+    e.preventDefault();
+
+    if ($(this).hasClass('explicit')) {
+        console.log('allow explicit')
+        playExplicit = true;
+        simpleStorage.set('playExplicit', playExplicit);
+    } else {
+        console.log('filter explicit')
+        playExplicit = false;
+        simpleStorage.set('playExplicit', playExplicit);
+    }
+
+    buildPlaylist();
+
+    if (playExplicit === false && currentSong['explicit'] === 'TRUE') {
+        playNextSong();
+    }
 }
 
 /*
