@@ -945,17 +945,15 @@ var onGoCleanButtonClick = function(e) {
 }
 
 /*
- * Begin clean shuffled playback from the landing screen.
+ * Update language filter state on toggle button click
  */
 var onLanguageChange = function(e) {
     e.preventDefault();
 
     if ($(this).hasClass('explicit')) {
-        console.log('allow explicit')
         playExplicit = true;
         simpleStorage.set('playExplicit', playExplicit);
     } else {
-        console.log('filter explicit')
         playExplicit = false;
         simpleStorage.set('playExplicit', playExplicit);
     }
