@@ -39,6 +39,9 @@ var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var RESET_STATE = (window.location.search.indexOf('resetstate') >= 0);
 var ALL_HISTORY = (window.location.search.indexOf('allhistory') >= 0);
 
+// Constants
+var AD_FREQUENCY = 5;
+
 // Global state
 var firstShareLoad = true;
 var playedSongs = [];
@@ -58,6 +61,7 @@ var is_small_screen = false
 var inPreroll = false;
 var firstReviewerSong = false;
 var playExplicit = null;
+var adCounter = 0;
 
 /*
  * Run on page load.
@@ -270,25 +274,42 @@ var makeMixtapeName = function(song) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
-    // if this is the first song in a curator playlist
-    // get one reviewed by the curator
-    var nextSong = _.find(playlist, function(song) {
-        if (!firstReviewerSong) {
-            return !(_.contains(playedSongs, song['id']));
-        } else {
-            return !(_.contains(playedSongs, song['id'])) && song['reviewer'] === selectedTag;
+    // check if it's time to display an ad, increment counter and proceed if not
+    if (adCounter === AD_FREQUENCY) {
+        var renderAd = true;
+        var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/addemo.mp3';
+        var nextSong = {
+            'artist': 'Advertisement',
+            'title': 'Advertiser'
         }
-    });
 
-    // some mixtape curators have not reviewed anything
-    // in this case, just use the normal filter
-    if (firstReviewerSong && !nextSong) {
+        adCounter = 0;
+    } else {
+        var renderAd = false;
+        adCounter++;
+
+        // if this is the first song in a curator playlist
+        // get one reviewed by the curator
         var nextSong = _.find(playlist, function(song) {
-            return !(_.contains(playedSongs, song['id']));
+            if (!firstReviewerSong) {
+                return !(_.contains(playedSongs, song['id']));
+            } else {
+                return !(_.contains(playedSongs, song['id'])) && song['reviewer'] === selectedTag;
+            }
         });
-    }
 
-    firstReviewerSong = false;
+        // some mixtape curators have not reviewed anything
+        // in this case, just use the normal filter
+        if (firstReviewerSong && !nextSong) {
+            var nextSong = _.find(playlist, function(song) {
+                return !(_.contains(playedSongs, song['id']));
+            });
+        }
+
+        firstReviewerSong = false;
+
+        var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
+    }
 
     // check if we can play the song legally (4 times per 3 hours)
     // if we don't have a song, get a new playlist
@@ -305,7 +326,12 @@ var playNextSong = function() {
     var context = $.extend(APP_CONFIG, nextSong, {
         'mixtapeName': makeMixtapeName(nextSong)
     });
-    var $html = $(JST.song(context));
+
+    if (renderAd === true) {
+        var $html = $(JST.ad(context));
+    } else {
+        var $html = $(JST.song(context));
+    }
     $songs.append($html);
 
     $playerArtist.html(nextSong['artist']);
@@ -313,10 +339,8 @@ var playNextSong = function() {
     document.title = nextSong['artist'] + ' \u2014 \u2018' + nextSong['title'] + '\u2019 | ' + COPY.content['project_name'];
     $skipsRemaining.show();
 
-    var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
-
     inPreroll = false;
-
+    console.log(nextSong);
     if (!NO_AUDIO) {
         $audioPlayer.jPlayer('setMedia', {
             mp3: nextsongURL
@@ -374,6 +398,25 @@ var playNextSong = function() {
     updateTotalSongsPlayed();
     writeSkipsRemaining();
     preloadSongImages();
+}
+
+/*
+ * Preload song art and reviewer headshot to make things smoother.
+ */
+var renderAd = function() {
+    var nextSong = _.find(playlist, function(song) {
+        return !(_.contains(playedSongs, song['id']));
+    });
+
+    if (!nextSong) {
+        return;
+    }
+
+    var songArt = new Image();
+    songArt.src = 'http://npr.org' + nextSong['song_art'];
+
+    var reviewerImage = new Image();
+    reviewerImage.src = APP_CONFIG.S3_BASE_URL + '/assets/img/' + APP_CONFIG.REVIEWER_IMAGES[nextSong['reviewer']];
 }
 
 /*
