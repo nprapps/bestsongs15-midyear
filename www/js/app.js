@@ -936,6 +936,10 @@ var onGoCleanButtonClick = function(e) {
     playExplicit = false;
     simpleStorage.set('playExplicit', playExplicit);
 
+    $languageToggle.find('input[value="clean"]').button('toggle');
+    $languageToggle.find('.clean').addClass('active');
+    $languageToggle.find('.explicit').removeClass('active');
+
 
     onGoButtonClick(e);
 }
