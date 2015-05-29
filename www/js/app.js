@@ -383,9 +383,17 @@ var playNextSong = function() {
                 $('.stack .poster').velocity('fadeOut', {
                     duration: 500
                 });
+
                 $html.prev().find('.container-fluid').css('height', '0');
                 $html.prev().find('.song-info').css('min-height', 0);
-                $html.prev().css('min-height', '0').addClass('small');
+                $html.prev().css('min-height', '0');
+
+                if ($html.prev().hasClass('ad')) {
+                    $html.prev().addClass('is-hidden');
+                } else {
+                    $html.prev().addClass('small');
+                }
+
                 $html.css('min-height', songHeight)
                     .velocity('fadeIn', {
                         duration: 300,
