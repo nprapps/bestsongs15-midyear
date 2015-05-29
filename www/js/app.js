@@ -467,7 +467,7 @@ var preloadSongImages = function() {
  */
 var setCurrentSongHeight = function(){
     windowHeight = Modernizr.touch ? window.innerHeight || $(window).height() : $(window).height();
-    songHeight = windowHeight - $player.height() - $fixedHeader.height() - $fixedControls.height();
+    songHeight = windowHeight - $player.height() - $fixedHeader.height() - $filtersButton.outerHeight();
 
     $songs.children().last().find('.container-fluid').css('height', songHeight);
     $songs.children().last().css('min-height', songHeight);
