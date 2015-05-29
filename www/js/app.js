@@ -281,6 +281,7 @@ var makeMixtapeName = function(song) {
 var onSkipIntroClick = function(e) {
     e.stopPropagation();
 
+    $('.tips').fadeOut();
     $(this).fadeOut();
     playNextSong();
 }
