@@ -942,6 +942,8 @@ var hideWelcome  = function() {
                 delay: 500
             });
             $(this).find('.poster').addClass('shrink');
+            $(this).find('.skip-intro').velocity('fadeOut');
+
         },
         complete: function() {
             $landing.velocity('fadeOut', {
