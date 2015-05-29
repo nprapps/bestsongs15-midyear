@@ -33,6 +33,7 @@ var $skipsRemaining = null;
 var $languageToggle = null;
 var $explicitButton = null;
 var $cleanButton = null;
+var $skipIntroButton = null;
 
 // URL params
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -62,6 +63,7 @@ var inPreroll = false;
 var firstReviewerSong = false;
 var playExplicit = null;
 var adCounter = 0;
+var renderAd = false;
 
 /*
  * Run on page load.
@@ -101,6 +103,7 @@ var onDocumentLoad = function(e) {
     $historyButton = $('.js-show-history');
     $skipsRemaining = $('.skips-remaining');
     $languageToggle = $('.language-toggle');
+    $skipIntroButton = $('.skip-intro');
     onWindowResize();
     $landing.show();
 
@@ -120,6 +123,7 @@ var onDocumentLoad = function(e) {
     $(document).on('scroll', onDocumentScroll);
     $shuffleSongs.on('click', onShuffleSongsClick);
     $historyButton.on('click', showHistory);
+    $skipIntroButton.on('click', onSkipIntroClick);
     $songs.on('click', '.song:not(:last-child)', onSongCardClick);
     $songs.on('click', '.song-tools .amazon', onAmazonClick);
     $songs.on('click', '.song-tools .itunes', oniTunesClick);
@@ -196,6 +200,7 @@ var onAudioEnded = function(e) {
         $audioPlayer.jPlayer('play');
     }
 
+    $skip.removeClass('disabled');
     playNextSong();
 }
 
@@ -271,12 +276,22 @@ var makeMixtapeName = function(song) {
 }
 
 /*
+ * Skip the welcome audio.
+ */
+var onSkipIntroClick = function(e) {
+    e.stopPropagation();
+
+    $(this).fadeOut();
+    playNextSong();
+}
+
+/*
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
     // check if it's time to display an ad, increment counter and proceed if not
     if (adCounter === AD_FREQUENCY) {
-        var renderAd = true;
+        renderAd = true;
         var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/addemo.mp3';
         var nextSong = {
             'artist': 'Advertisement',
@@ -285,7 +300,7 @@ var playNextSong = function() {
 
         adCounter = 0;
     } else {
-        var renderAd = false;
+        renderAd = false;
         adCounter++;
 
         // if this is the first song in a curator playlist
@@ -563,7 +578,11 @@ var toggleFilterPanel = function() {
  */
 var onSkipClick = function(e) {
     e.preventDefault();
-    skipSong();
+
+
+    if (!$(this).hasClass('disabled')) {
+        skipSong();
+    }
 }
 
 /*
@@ -622,6 +641,10 @@ var writeSkipsRemaining = function() {
     else {
         $skipsRemaining.text(APP_CONFIG.SKIP_LIMIT - usedSkips.length + ' skips available')
         $skip.removeClass('disabled');
+    }
+
+    if (renderAd === true) {
+        $skip.addClass('disabled');
     }
 }
 

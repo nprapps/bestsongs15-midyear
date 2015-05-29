@@ -154,6 +154,21 @@ h1,h2,h3,h4,h5,h6 {
 		}
 	}
 
+    .skip-intro {
+		display: block;
+		position: absolute;
+		z-index: 600;
+		opacity: 0;
+		bottom: 2rem;
+		background: transparent;
+		color: @white;
+		text-transform: uppercase;
+		font-size: @font-size-small;
+		left: 50%;
+		width: 7rem;
+		margin-left: -3.5rem;
+	}
+
 	.poster {
 		.transition(width 0.5s ease-in-out);
 		.start& {
@@ -161,6 +176,10 @@ h1,h2,h3,h4,h5,h6 {
 
 			&:after {
 				.animation(cycle-colors 8s infinite linear);
+			}
+
+            .skip-intro {
+				opacity: 1;
 			}
 		}
 	}
