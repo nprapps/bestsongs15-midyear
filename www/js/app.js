@@ -9,6 +9,7 @@ var $audioPlayer = null;
 var $playerArtist = null;
 var $playerTitle = null;
 var $currentTime = null;
+var $totalTime = null;
 var $allTags = null;
 var $playlistLength = null;
 var $totalSongs = null;
@@ -34,6 +35,7 @@ var $languageToggle = null;
 var $explicitButton = null;
 var $cleanButton = null;
 var $skipIntroButton = null;
+var $songsRemaining = null;
 
 // URL params
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -83,6 +85,7 @@ var onDocumentLoad = function(e) {
     $playerTitle = $('.player .song-title');
     $allTags = $('.playlist-filters li a');
     $currentTime = $('.current-time');
+    $totalTime = $('.total-time');
     $playlistLength = $('.playlist-length');
     $totalSongs = $('.total-songs');
     $tagsWrapper = $('.tags-wrapper');
@@ -104,6 +107,7 @@ var onDocumentLoad = function(e) {
     $skipsRemaining = $('.skips-remaining');
     $languageToggle = $('.language-toggle');
     $skipIntroButton = $('.skip-intro');
+    $songsRemaining = $('.songs-remaining');
     onWindowResize();
     $landing.show();
 
@@ -208,8 +212,16 @@ var onAudioEnded = function(e) {
  * Update playback timer display.
  */
 var onTimeUpdate = function(e) {
-    var time_text = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
-    $currentTime.text(time_text);
+    var currentTime = e.jPlayer.status.currentTime;
+    var currentTimeText = $.jPlayer.convertTime(currentTime);
+    var duration = e.jPlayer.status.duration;
+    var durationText = $.jPlayer.convertTime(duration);
+
+    $currentTime.text(currentTimeText);
+
+    if (durationText !== "00:00") {
+        $totalTime.text(durationText);
+    }
 };
 
 /*
@@ -265,7 +277,7 @@ var makeMixtapeName = function(song) {
             mixtapeName = song['reviewer'].split(' ')[0];
 
             if (mixtapeName[mixtapeName.length - 11] == 's') {
-                mixtapeName += '&rsquo;'
+                mixtapeName += '&rsquo;';
             } else {
                 mixtapeName += '&rsquo;' + 's';
             }
@@ -290,7 +302,8 @@ var onSkipIntroClick = function(e) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
-    // check if it's time to display an ad, increment counter and proceed if not
+    // load ad data if ad frequency count is reached
+    // increment counter and load song data if not
     if (adCounter === AD_FREQUENCY) {
         renderAd = true;
         var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/addemo.mp3';
@@ -478,6 +491,10 @@ var setCurrentSongHeight = function(){
  * more than 4 times in 3 hours
  */
 var checkSongHistory = function(song) {
+    if (song['artist'] === 'Advertisement') {
+        return true;
+    }
+
     if (songHistory[song['id']]) {
         for (var i = 0; i < songHistory[song['id']].length; i++) {
             var now = moment.utc();
@@ -497,6 +514,7 @@ var checkSongHistory = function(song) {
 
     songHistory[song['id']].push(moment.utc());
     simpleStorage.set('songHistory', songHistory);
+    $songsRemaining.text(SONG_DATA.length - _.size(songHistory) + ' songs remaining');
 
     return true;
 }

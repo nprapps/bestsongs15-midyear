@@ -1065,6 +1065,12 @@ h1,h2,h3,h4,h5,h6 {
 		}
 	}
 
+    .player-song-info {
+        position: absolute;
+        top: 0;
+        left: 5rem;
+    }
+
 	.artist,
 	.song-title {
 		position: relative;
@@ -1075,39 +1081,72 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
 	.artist {
-		font-size: @font-size-base * 1.2;
+		font-size: @font-size-base;
 		letter-spacing: 0.1rem;
 		margin-top: 10px;
 		margin-bottom: 5px;
 	}
 
 	.song-title {
-		font-size: @font-size-base * 1.6;
+		font-size: @font-size-base;
 		color: @music-medium;
 		text-indent: 0;
 	}
 
-	.player-progress {
+	.jp-progress-container {
 		position: absolute;
 		left: 5rem;
-		top: 0;
+		top: 4rem;
 		bottom: 0;
 		right: 5rem;
 
+        .player-progress {
+            position: absolute;
+            left: 5rem;
+            right: 5rem;
+            bottom: 0.5rem;
+            height: 0.5rem;
+            background: #444;
+        }
+
 		.bar {
 			position: absolute;
-			height: 5rem;
-			top: 0;
+			height: 0.5rem;
+			/* top: 0; */
 			bottom: 0;
 			left: 0;
-			background-color: #444;
+			background-color: #666;
 		}
+
+        .current-time,
+        .total-time {
+            position: absolute;
+            bottom: 0;
+            height: 1.5rem;
+            width: 4rem;
+            line-height: 1.5rem;
+            font-size: @font-size-small;
+            color: #999;
+        }
+
+        .current-time {
+            left: 0;
+            padding-left: 1rem;
+        }
+
+        .total-time {
+            right: 0;
+            padding-right: 1rem;
+            text-align: right;
+        }
+
+
 	}
 	.playback-info {
-		right: 5.5rem;
+		right: 6rem;
+        padding-top: 10px;
 		text-align: right;
 		line-height: 1;
-		.vertical-center;
 		position: absolute;
 	}
 }
@@ -1142,12 +1181,14 @@ h1,h2,h3,h4,h5,h6 {
 	}
 }
 
-.skips {
+.skips,
+.songs-remaining {
 	text-align: right;
 	color: #999;
 	text-transform: uppercase;
 	font-size: @font-size-small;
 	padding: 5px 0 0;
+    margin: 0;
 
 	@media screen and (max-width: @screen-xs-max){
 		font-size: @font-size-base * 0.715;
