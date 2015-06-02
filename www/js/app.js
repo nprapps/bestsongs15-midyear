@@ -431,8 +431,12 @@ var playNextSong = function() {
     }
 
     currentSong = nextSong;
-    markSongPlayed(currentSong);
-    updateTotalSongsPlayed();
+
+    if (renderAd === false) {
+        markSongPlayed(currentSong);
+        updateTotalSongsPlayed();
+    }
+
     writeSkipsRemaining();
     preloadSongImages();
 }
