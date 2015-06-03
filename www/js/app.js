@@ -296,6 +296,8 @@ var onSkipIntroClick = function(e) {
     $('.tips').fadeOut();
     $(this).fadeOut();
     playNextSong();
+
+    ANALYTICS.trackEvent('skip-intro');
 }
 
 /*
@@ -313,6 +315,7 @@ var playNextSong = function() {
         }
 
         adCounter = 0;
+        ANALYTICS.trackEvent('render-ad');
     } else {
         renderAd = false;
         adCounter++;
@@ -369,7 +372,6 @@ var playNextSong = function() {
     $skipsRemaining.show();
 
     inPreroll = false;
-    console.log(nextSong);
     if (!NO_AUDIO) {
         $audioPlayer.jPlayer('setMedia', {
             mp3: nextsongURL
@@ -444,25 +446,6 @@ var playNextSong = function() {
 /*
  * Preload song art and reviewer headshot to make things smoother.
  */
-var renderAd = function() {
-    var nextSong = _.find(playlist, function(song) {
-        return !(_.contains(playedSongs, song['id']));
-    });
-
-    if (!nextSong) {
-        return;
-    }
-
-    var songArt = new Image();
-    songArt.src = 'http://npr.org' + nextSong['song_art'];
-
-    var reviewerImage = new Image();
-    reviewerImage.src = APP_CONFIG.S3_BASE_URL + '/assets/img/' + APP_CONFIG.REVIEWER_IMAGES[nextSong['reviewer']];
-}
-
-/*
- * Preload song art and reviewer headshot to make things smoother.
- */
 var preloadSongImages = function() {
     var nextSong = _.find(playlist, function(song) {
         return !(_.contains(playedSongs, song['id']));
@@ -532,7 +515,7 @@ var nextPlaylist = function() {
         resetState();
     }
 
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'tag-finish', selectedTag]);
+    ANALYTICS.trackEvent('tag-finish', selectedTag);
     var tag = null;
 
     if (selectedTag === null || _.contains(APP_CONFIG.GENRE_TAGS, selectedTag)) {
@@ -553,7 +536,7 @@ var updateTotalSongsPlayed = function() {
     simpleStorage.set('totalSongsPlayed', totalSongsPlayed);
 
     if (totalSongsPlayed % 5 === 0) {
-        _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'songs-played', '', totalSongsPlayed]);
+        ANALYTICS.trackEvent('songs-played', null, 5);
     }
 }
 
@@ -598,8 +581,12 @@ var toggleFilterPanel = function() {
     if (!$fixedControls.hasClass('expand')) {
 
         $fixedControls.addClass('expand');
+
+        ANALYTICS.trackEvent('filter-panel-open');
     } else {
         $fixedControls.removeClass('expand');
+
+        ANALYTICS.trackEvent('filter-panel-close');
     }
 }
 
@@ -623,7 +610,7 @@ var skipSong = function() {
     if (inPreroll || usedSkips.length < APP_CONFIG.SKIP_LIMIT) {
         if (!inPreroll) {
             usedSkips.push(moment.utc());
-            _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'song-skip', $playerArtist.text() + ' - ' + $playerTitle.text(), usedSkips.length]);
+            ANALYTICS.trackEvent('song-skip', $playerArtist.text() + ' - ' + $playerTitle.text());
         }
 
         playNextSong();
@@ -892,7 +879,7 @@ var switchTag = function(tag, noAutoplay) {
         playIntroAudio();
     }
 
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'switch-tag', selectedTag]);
+    ANALYTICS.trackEvent('switch-tag', selectedTag);
 }
 
 /*
@@ -1023,7 +1010,7 @@ var onGoButtonClick = function(e) {
     switchTag(null, true);
     playIntroAudio();
 
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'shuffle']);
+    ANALYTICS.trackEvent('shuffle');
 }
 
 /*
@@ -1041,6 +1028,7 @@ var onGoCleanButtonClick = function(e) {
 
 
     onGoButtonClick(e);
+    ANALYTICS.trackEvent('shuffle-clean');
 }
 
 /*
@@ -1052,9 +1040,11 @@ var onLanguageChange = function(e) {
     if ($(this).hasClass('explicit')) {
         playExplicit = true;
         simpleStorage.set('playExplicit', playExplicit);
+        ANALYTICS.trackEvent('explicit-language-on');
     } else {
         playExplicit = false;
         simpleStorage.set('playExplicit', playExplicit);
+        ANALYTICS.trackEvent('explicit-language-off');
     }
 
     buildPlaylist();
@@ -1073,12 +1063,20 @@ var onContinueButtonClick = function(e) {
     updateTagDisplay();
     $landing.velocity('fadeOut');
     playNextSong();
+
+    ANALYTICS.trackEvent('continue-playback-click');
 }
 
 /*
  * Toggle played song card size
  */
 var onSongCardClick = function(e) {
+    if ($(this).hasClass('small')) {
+        ANALYTICS.trackEvent('song-card-expand');
+    } else {
+        ANALYTICS.trackEvent('song-card-shrink');
+    }
+
     $(this).toggleClass('small');
 }
 
@@ -1116,7 +1114,8 @@ var onDocumentKeyDown = function(e) {
 var onAmazonClick = function(e) {
     var thisSong = getSong($(this));
 
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'amazon-click', thisSong]);
+
+    ANALYTICS.trackEvent('amazon-click', thisSong);
 
     e.stopPropagation();
 }
@@ -1127,7 +1126,7 @@ var onAmazonClick = function(e) {
 var oniTunesClick = function(e) {
     var thisSong = getSong($(this));
 
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'itunes-click', thisSong]);
+    ANALYTICS.trackEvent('itunes-click', thisSong);
 
     e.stopPropagation();
 }
@@ -1138,7 +1137,7 @@ var oniTunesClick = function(e) {
 var onRdioClick = function(e) {
     var thisSong = getSong($(this));
 
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'rdio-click', thisSong]);
+    ANALYTICS.trackEvent('rdio-click', thisSong);
 
     e.stopPropagation();
 }
@@ -1149,7 +1148,7 @@ var onRdioClick = function(e) {
 var onSpotifyClick = function(e) {
     var thisSong = getSong($(this));
 
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'spotify-click', thisSong]);
+    ANALYTICS.trackEvent('spotify-click', thisSong);
 
     e.stopPropagation();
 }
@@ -1174,6 +1173,8 @@ var getSong = function($el) {
 var showHistory = function() {
     $songs.find('.song:not(:last)').addClass('small');
     $songs.velocity('scroll');
+
+    ANALYTICS.trackEvent('show-history-click');
 }
 
 /*
@@ -1217,14 +1218,15 @@ var onDocumentScroll = _.throttle(function(e) {
  * Share modal opened.
  */
 var onShareModalShown = function(e) {
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'open-share-discuss']);
+
+    ANALYTICS.trackEvent('share-discuss-open');
 }
 
 /*
  * Share modal closed.
  */
 var onShareModalHidden = function(e) {
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'close-share-discuss']);
+    ANALYTICS.trackEvent('share-discuss-close');
 }
 
 /*
@@ -1233,7 +1235,8 @@ var onShareModalHidden = function(e) {
 var onClippyCopy = function(e) {
     alert('Copied to your clipboard!');
 
-    _gaq.push(['_trackEvent', APP_CONFIG.PROJECT_SLUG, 'summary-copied']);
+
+    ANALYTICS.trackEvent('summary-copied');
 }
 
 $(onDocumentLoad);
