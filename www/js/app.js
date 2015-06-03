@@ -32,6 +32,7 @@ var $fixedControls = null;
 var $historyButton = null;
 var $skipsRemaining = null;
 var $languageToggle = null;
+var $languageStatus = null;
 var $explicitButton = null;
 var $cleanButton = null;
 var $skipIntroButton = null;
@@ -106,6 +107,7 @@ var onDocumentLoad = function(e) {
     $historyButton = $('.js-show-history');
     $skipsRemaining = $('.skips-remaining');
     $languageToggle = $('.language-toggle');
+    $languageStatus = $('.language-filter');
     $skipIntroButton = $('.skip-intro');
     $songsRemaining = $('.songs-remaining');
     onWindowResize();
@@ -1026,6 +1028,7 @@ var onGoCleanButtonClick = function(e) {
     $languageToggle.find('.clean').addClass('active');
     $languageToggle.find('.explicit').removeClass('active');
 
+    $languageStatus.removeClass('explicit').text('Clean');
 
     onGoButtonClick(e);
     ANALYTICS.trackEvent('shuffle-clean');
@@ -1040,10 +1043,14 @@ var onLanguageChange = function(e) {
     if ($(this).hasClass('explicit')) {
         playExplicit = true;
         simpleStorage.set('playExplicit', playExplicit);
+        $languageStatus.removeClass('explicit').text('Clean');
+
         ANALYTICS.trackEvent('explicit-language-on');
     } else {
         playExplicit = false;
         simpleStorage.set('playExplicit', playExplicit);
+        $languageStatus.addClass('explicit').text('Explicit');
+
         ANALYTICS.trackEvent('explicit-language-off');
     }
 

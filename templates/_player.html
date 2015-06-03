@@ -1,7 +1,11 @@
 <div class="player-container">
     <div class="fixed-controls">
         <div class="filters">
-            <h2 class="filter-title js-toggle-filters"><span class="carot"></span>Current Mix <span class="current-dj"></span></h2>
+            <div class="filter-title js-toggle-filters">
+                <span class="carot"></span>
+                <h2 class="mix-header">Current Mix <span class="language-filter explicit">Explicit</span></h2>
+                <h3 class="current-dj"></h3>
+            </div>
         </div>
 
         {% include '_filter.html' %}
