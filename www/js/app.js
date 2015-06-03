@@ -1043,13 +1043,13 @@ var onLanguageChange = function(e) {
     if ($(this).hasClass('explicit')) {
         playExplicit = true;
         simpleStorage.set('playExplicit', playExplicit);
-        $languageStatus.removeClass('explicit').text('Clean');
+        $languageStatus.addClass('explicit').text('Explicit');
 
         ANALYTICS.trackEvent('explicit-language-on');
     } else {
         playExplicit = false;
         simpleStorage.set('playExplicit', playExplicit);
-        $languageStatus.addClass('explicit').text('Explicit');
+        $languageStatus.removeClass('explicit').text('Clean');
 
         ANALYTICS.trackEvent('explicit-language-off');
     }
