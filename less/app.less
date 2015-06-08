@@ -192,7 +192,15 @@ h1,h2,h3,h4,h5,h6 {
 
 	.tags-wrapper {
 		margin-top: 2rem;
+
+        + .tags-wrapper {
+            margin-top: 0;
+        }
 	}
+
+    .tags-wrapper p {
+        font-size: 0.7rem;        
+    }
 
 	.tags li a {
 		font-size: @font-size-base * 0.715;

@@ -253,6 +253,7 @@ var playIntroAudio = function() {
 
     if (!onWelcome) {
         $('.stack .poster').velocity('fadeIn');
+        $('.stack .poster').find('.loading').text(selectedTag).css('opacity',1);
         $skipsRemaining.hide();
     }
 

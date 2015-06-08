@@ -9,8 +9,7 @@
                 <h1 class="title"><img class="project-logo hidden-xs" src="{{ S3_BASE_URL }}/assets/img/intro-logo.svg" alt="Songs We Love 2014"><img class="project-logo visible-xs" src="{{ S3_BASE_URL }}/assets/img/intro-logo-small.svg" alt="Songs We Love 2014"></h1>
                 <!-- <h2>{{ COPY.content.subtitle }}</h2> -->
 
-                <div class="landing-firstload-deck">
-                    <div class="tags-wrapper">
+                <div class="landing-firstload-deck tags-wrapper">
                         {# <p>Play a genre</p>
                         <ul class="tags list-unstyled">
                             {% for tag in GENRE_TAGS %}
@@ -18,15 +17,16 @@
                             {% endfor %}
                         </ul>
                         <p>Or</p> #}
-                        <a class="go" href="#">Play</a>
-                        <p class="language-advisory"><span class="fa fa-warning"></span> ADVISORY: Some of these songs contain explicit language. <a class="go-clean" href="#">Play Only Clean Songs <span class="icon-play"></span></a></p>
-                    </div>
+                    <a class="go" href="#">Play</a>
                 </div>
-                <div class="landing-return-deck">
-                    <div class="tags-wrapper">
-                        <a class="continue" href="#">Welcome Back!</a>
-                        <p class="language-advisory"><span class="fa fa-warning"></span> ADVISORY: Some of these songs contain explicit language. <a class="go-clean" href="#">Play Only Clean Songs <span class="icon-play"></span></a></p>
-                    </div>
+                <div class="landing-return-deck tags-wrapper">
+                    <a class="continue" href="#">Welcome Back!</a>
+                </div>
+
+                <div class="tags-wrapper">
+                    <p class="language-advisory"><span class="fa fa-warning"></span> ADVISORY: Some of these songs contain explicit language. <a class="go-clean" href="#">Play Only Clean Songs <span class="icon-play"></span></a></p>
+                    <p><a href="#"><i class="icon-rdio"></i> Listen on Rdio</a></p>
+                    <p><a href="#"><i class="icon-spotify-circled"></i> Listen on Spotify</a></p>
                 </div>
             </div>
         </div>
