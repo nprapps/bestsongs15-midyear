@@ -120,6 +120,7 @@ var onDocumentLoad = function(e) {
     $goCleanButton.on('click', onGoCleanButtonClick);
     $continueButton.on('click', onContinueButtonClick);
     $genreFilters.on('click', onGenreClick);
+    $songs.on('click', '.genre-btn', onGenreClick);
     $reviewerFilters.on('click', onReviewerClick);
     $skip.on('click', onSkipClick);
     $play.on('click', onPlayClick);
@@ -583,10 +584,12 @@ var toggleFilterPanel = function() {
     if (!$fixedControls.hasClass('expand')) {
 
         $fixedControls.addClass('expand');
+        $body.css('overflow', 'hidden');
 
         ANALYTICS.trackEvent('filter-panel-open');
     } else {
         $fixedControls.removeClass('expand');
+        $body.css('overflow', 'auto');
 
         ANALYTICS.trackEvent('filter-panel-close');
     }
@@ -858,7 +861,16 @@ var onGenreClick = function(e) {
 
     var genre = $(this).data('tag');
     switchTag(genre);
-    toggleFilterPanel();
+
+    if (!$(this).hasClass('genre-btn-song')) {
+        toggleFilterPanel();
+    } else {
+        $filtersButton.addClass('updated');
+
+        _.delay(function() {
+            $filtersButton.removeClass('updated');
+        }, 1000)
+    }
 }
 
 /*

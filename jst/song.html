@@ -10,7 +10,7 @@
                     <h3 class="tag-header">Filed Under:</h3>
                     <ul class="list-unstyled no-click">
                         <% for (var i = 0; i < genre_tags.length; i++) { %>
-                            <li><%= genre_tags[i] %></li>
+                            <li><a class="disabled genre-btn genre-btn-song" data-tag="<%= genre_tags[i] %>" href="#"><%= genre_tags[i] %></a></li>
                         <% } %>
                     </ul>
                 </div>
