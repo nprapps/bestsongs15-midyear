@@ -39,6 +39,8 @@
 @white: #fff;
 @gray-medium: #A0A0A0;
 
+
+@tag-0: #f97e50;
 @tag-1: #f97450;
 @tag-2: #f05b4e;
 @tag-3: #ce4242;
@@ -49,7 +51,7 @@
 @tag-8: #524189;
 @tag-9: #5756a5;
 @tag-10: #416ab8;
-@tag-11: darken(#416ab8, 10%);
+@tag-11: #415bb8;
 
 // Z-indexes
 @z-player-controls: 100;
@@ -199,7 +201,7 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
     .tags-wrapper p {
-        font-size: 0.7rem;        
+        font-size: 0.7rem;
     }
 
 	.tags li a {
@@ -1587,17 +1589,18 @@ h1,h2,h3,h4,h5,h6 {
         text-transform: lowercase;
     }
 
-	li:nth-child(1n) a { background: @tag-1; border-color: @tag-1; }
-	li:nth-child(2n) a { background: @tag-2; border-color: @tag-2; }
-	li:nth-child(3n) a { background: @tag-3; border-color: @tag-3; }
-	li:nth-child(4n) a { background: @tag-4; border-color: @tag-4; }
-	li:nth-child(5n) a { background: @tag-5; border-color: @tag-5; }
-	li:nth-child(6n) a { background: @tag-6; border-color: @tag-6; }
-	li:nth-child(7n) a { background: @tag-7; border-color: @tag-7; }
-	li:nth-child(8n) a { background: @tag-8; border-color: @tag-8; }
-	li:nth-child(9n) a { background: @tag-9; border-color: @tag-9; }
-	li:nth-child(10n) a { background: @tag-10; border-color: @tag-10; }
-	li:nth-child(11n) a { background: @tag-11; border-color: @tag-11; }
+    li:nth-child(1n) a { background: @tag-0; border-color: @tag-0; }
+	li:nth-child(2n) a { background: @tag-1; border-color: @tag-1; }
+	li:nth-child(3n) a { background: @tag-2; border-color: @tag-2; }
+	li:nth-child(4n) a { background: @tag-3; border-color: @tag-3; }
+	li:nth-child(5n) a { background: @tag-4; border-color: @tag-4; }
+	li:nth-child(6n) a { background: @tag-5; border-color: @tag-5; }
+	li:nth-child(7n) a { background: @tag-6; border-color: @tag-6; }
+	li:nth-child(8n) a { background: @tag-7; border-color: @tag-7; }
+	li:nth-child(9n) a { background: @tag-8; border-color: @tag-8; }
+	li:nth-child(10n) a { background: @tag-9; border-color: @tag-9; }
+	li:nth-child(11n) a { background: @tag-10; border-color: @tag-10; }
+	li:nth-child(12n) a { background: @tag-11; border-color: @tag-11; }
 
 	.no-touch & {
 		li a:hover {

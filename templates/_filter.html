@@ -4,14 +4,15 @@
 <div class="playlist-filters">
 
     <div class="playlist-filters-wrapper">
-        <h3>Shuffle</h3>
-        <ul class="tags list-unstyled">
-            <li><a href="#" class="shuffle-songs">All Our Favorite Songs</a></li>
-        </ul>
+<!--         <h3>Shuffle</h3>
+<ul class="tags list-unstyled">
+
+</ul> -->
 
         <div class="genre">
             <h3>Select a genre</h3>
             <ul class="tags list-unstyled">
+                <li><a href="#" class="shuffle-songs">Shuffle All</a></li>
                 {% for tag in GENRE_TAGS %}
                 <li><a class="disabled genre-btn" data-tag="{{ tag }}" href="#">{{ tag }}</a></li>
                 {% endfor %}
