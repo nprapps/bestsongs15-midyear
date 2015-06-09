@@ -58,6 +58,7 @@ var playedsongCount = null;
 var usedSkips = [];
 var curator = null;
 var totalSongsPlayed = 0;
+var sessionSongsPlayed = 0;
 var songHistory = {};
 var songHeight = null;
 var fixedHeaderHeight = null;
@@ -544,6 +545,7 @@ var nextPlaylist = function() {
  */
 var updateTotalSongsPlayed = function() {
     totalSongsPlayed++;
+    sessionSongsPlayed++;
     simpleStorage.set('totalSongsPlayed', totalSongsPlayed);
 
     if (totalSongsPlayed % 5 === 0) {
@@ -896,6 +898,7 @@ var switchTag = function(tag, noAutoplay) {
     }
 
     ANALYTICS.trackEvent('switch-tag', selectedTag);
+    ANALYTICS.trackEvent('switch-tag-songs', sessionSongsPlayed);
 }
 
 /*
