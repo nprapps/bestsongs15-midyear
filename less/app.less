@@ -1220,7 +1220,6 @@ h1,h2,h3,h4,h5,h6 {
 	border-bottom: 1px solid #ddd;
 	cursor: pointer;
 	padding-left: 6rem;
-    .transition(all 1s ease-in-out);
 
     @media screen and (max-width: @screen-xs-max){
 		letter-spacing: 0.15rem;
@@ -1238,24 +1237,13 @@ h1,h2,h3,h4,h5,h6 {
 		}
 	}
 
-    &.updated {
-        background: @tag-10;
-        border-color: @tag-10;
-
-        .carot,
-        .mix-header,
-        .current-dj,
-        .language-filter {
-            color: #fff;
-            border-color: #fff;
-        }
+    &.updated .current-dj {
+        .translate(20rem, 0);
+        opacity: 0;
     }
 
-    .carot,
-    .mix-header,
-    .current-dj,
-    .language-filter {
-        .transition(all 0.5s ease-in);
+    .current-dj {
+        .transition(all 0.2s ease-in);
     }
 
     .mix-header {
@@ -1302,7 +1290,7 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
 	.song-count,
-	.current-dj { color: #666 }
+	.current-dj { color: #666; opacity: 1; }
 
 	.current-dj {
 		display: block;

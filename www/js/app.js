@@ -872,12 +872,6 @@ var onGenreClick = function(e) {
 
     if (!$(this).hasClass('genre-btn-song')) {
         toggleFilterPanel();
-    } else {
-        $filtersButton.addClass('updated');
-
-        _.delay(function() {
-            $filtersButton.removeClass('updated');
-        }, 1000)
     }
 }
 
@@ -932,7 +926,11 @@ var updateTagDisplay = function() {
             tag = tag.toUpperCase();
         }
 
-        $currentDj.text(tag);
+        $filtersButton.addClass('updated');
+        _.delay(function() {
+            $currentDj.text(tag);
+            $filtersButton.removeClass('updated');
+        }, 250)
     }
 }
 
