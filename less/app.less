@@ -907,9 +907,6 @@ h1,h2,h3,h4,h5,h6 {
 
 		.reviewer-link {
 			display: block;
-			// position: absolute;
-			// left: @grid-gutter-width;
-			// bottom: 1rem;
 			padding: 1rem 0 0 2rem;
 			background: transparent;
 			color: @music-hp-link-color;
@@ -919,6 +916,13 @@ h1,h2,h3,h4,h5,h6 {
 			@media screen and (max-width: @screen-xs-max){
 				padding: 0 0 0 1rem;
 			}
+
+            &:hover {
+                .no-touch & {
+                    color: fadeout(@music-hp-link-color2, 30%);
+                    text-decoration: none;
+                }
+            }
 		}
 	}
 
@@ -1009,6 +1013,11 @@ h1,h2,h3,h4,h5,h6 {
 			content: "";
 		}
 	}
+
+    a:link,
+    a:hover {
+        text-decoration: none;
+    }
 }
 
 .song.small .song-tags {
