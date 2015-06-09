@@ -1627,10 +1627,7 @@ h1,h2,h3,h4,h5,h6 {
     }
 
 	.no-touch & {
-		li a.disabled:hover {
-			text-decoration: none;
-			opacity: 0.5;
-		}
+
 	}
 
     li a.disabled {
@@ -1653,10 +1650,11 @@ h1,h2,h3,h4,h5,h6 {
             }
         }
     }
+}
 
-/* 	.disabled {
+.no-touch .genre .tags li a.disabled:hover {
+    text-decoration: none;
     opacity: 0.5;
-} */
 }
 
 .current-song {
