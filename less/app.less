@@ -1405,34 +1405,7 @@ h1,h2,h3,h4,h5,h6 {
 		margin-bottom: 2rem;
 	}
 
-    li a {
-        opacity: 0.5;
-    }
 
-	li a.disabled {
-		opacity: 1;
-	}
-
-	li a.disabled:hover {
-		opacity: 0.5;
-
-        .mug:before {
-            opacity: 0;
-        }
-	}
-
-    .no-touch & {
-		li a.disabled:hover {
-			text-decoration: none;
-			opacity: 1;
-
-            .reviewer-link {
-                background: @music-hp-link-color2;
-                color: #fff;
-                border-color: @music-hp-link-color2;
-            }
-		}
-	}
 
 	.reviewers.tags {
 		.clearfix;
@@ -1469,7 +1442,6 @@ h1,h2,h3,h4,h5,h6 {
 			position: absolute;
 			left: 0;
 			top: 0;
-			opacity: 0.7;
 		}
 
 		.bio {
@@ -1589,29 +1561,114 @@ h1,h2,h3,h4,h5,h6 {
         text-transform: lowercase;
     }
 
-    li:nth-child(1n) a { background: @tag-0; border-color: @tag-0; }
-	li:nth-child(2n) a { background: @tag-1; border-color: @tag-1; }
-	li:nth-child(3n) a { background: @tag-2; border-color: @tag-2; }
-	li:nth-child(4n) a { background: @tag-3; border-color: @tag-3; }
-	li:nth-child(5n) a { background: @tag-4; border-color: @tag-4; }
-	li:nth-child(6n) a { background: @tag-5; border-color: @tag-5; }
-	li:nth-child(7n) a { background: @tag-6; border-color: @tag-6; }
-	li:nth-child(8n) a { background: @tag-7; border-color: @tag-7; }
-	li:nth-child(9n) a { background: @tag-8; border-color: @tag-8; }
-	li:nth-child(10n) a { background: @tag-9; border-color: @tag-9; }
-	li:nth-child(11n) a { background: @tag-10; border-color: @tag-10; }
-	li:nth-child(12n) a { background: @tag-11; border-color: @tag-11; }
+    .genre & {
+        li:nth-child(1n) a { background: transparent; border-color: @tag-0; color: @tag-0; }
+        li:nth-child(2n) a { background: transparent; border-color: @tag-1; color: @tag-1; }
+        li:nth-child(3n) a { background: transparent; border-color: @tag-2; color: @tag-2; }
+        li:nth-child(4n) a { background: transparent; border-color: @tag-3; color: @tag-3; }
+        li:nth-child(5n) a { background: transparent; border-color: @tag-4; color: @tag-4; }
+        li:nth-child(6n) a { background: transparent; border-color: @tag-5; color: @tag-5; }
+        li:nth-child(7n) a { background: transparent; border-color: @tag-6; color: @tag-6; }
+        li:nth-child(8n) a { background: transparent; border-color: @tag-7; color: @tag-7; }
+        li:nth-child(9n) a { background: transparent; border-color: @tag-8; color: @tag-8; }
+        li:nth-child(10n) a { background: transparent; border-color: @tag-9; color: @tag-9; }
+        li:nth-child(11n) a { background: transparent; border-color: @tag-10; color: @tag-10; }
+        li:nth-child(12n) a { background: transparent; border-color: @tag-11; color: @tag-11; }
+
+        li a {
+            border-width: 2px;
+            border-style: solid;
+        }
+
+        li a.disabled {
+            color: #fff;
+        }
+
+        li a.disabled:hover {
+            opacity: 0.5;
+        }
+
+        li:nth-child(1n) a.disabled { background: @tag-0; border-color: @tag-0; }
+        li:nth-child(2n) a.disabled { background: @tag-1; border-color: @tag-1; }
+        li:nth-child(3n) a.disabled { background: @tag-2; border-color: @tag-2; }
+        li:nth-child(4n) a.disabled { background: @tag-3; border-color: @tag-3; }
+        li:nth-child(5n) a.disabled { background: @tag-4; border-color: @tag-4; }
+        li:nth-child(6n) a.disabled { background: @tag-5; border-color: @tag-5; }
+        li:nth-child(7n) a.disabled { background: @tag-6; border-color: @tag-6; }
+        li:nth-child(8n) a.disabled { background: @tag-7; border-color: @tag-7; }
+        li:nth-child(9n) a.disabled { background: @tag-8; border-color: @tag-8; }
+        li:nth-child(10n) a.disabled { background: @tag-9; border-color: @tag-9; }
+        li:nth-child(11n) a.disabled { background: @tag-10; border-color: @tag-10; }
+        li:nth-child(12n) a.disabled { background: @tag-11; border-color: @tag-11; }
+    }
+
+    .reviewer & li a {
+        .mug {
+            opacity: 1;
+            .transition(opacity 0.2s ease-in-out);
+        }
+
+        .mug:before {
+            opacity: 0;
+        }
+
+        .reviewer-link {
+            opacity: 0;
+            .transition(opacity 0.1s ease-in-out);
+        }
+
+        &.disabled .reviewer-link {
+            opacity: 1;
+        }
+
+        &.disabled .mug {
+            opacity: 0.7;
+        }
+
+        &.disabled .mug:before {
+            opacity: 1;
+        }
+
+        &.disabled:hover .mug {
+            opacity: 1;
+        }
+
+        &.disabled:hover .mug:before {
+            opacity: 0;
+        }
+    }
 
 	.no-touch & {
-		li a:hover {
+		li a.disabled:hover {
 			text-decoration: none;
 			opacity: 0.5;
 		}
 	}
 
-	.disabled {
-		opacity: 0.5;
-	}
+    li a.disabled {
+        opacity: 1;
+    }
+
+
+
+
+
+    .no-touch & {
+        li a.disabled:hover {
+            text-decoration: none;
+            opacity: 1;
+
+            .reviewer-link {
+                background: @music-hp-link-color2;
+                color: #fff;
+                border-color: @music-hp-link-color2;
+            }
+        }
+    }
+
+/* 	.disabled {
+    opacity: 0.5;
+} */
 }
 
 .current-song {

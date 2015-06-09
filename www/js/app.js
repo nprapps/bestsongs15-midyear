@@ -232,6 +232,7 @@ var onTimeUpdate = function(e) {
  */
 var playIntroAudio = function() {
     var audioFile = null;
+    var introText = selectedTag;
 
     // if on welcome screen, play the intro audio
     if (onWelcome) {
@@ -252,8 +253,14 @@ var playIntroAudio = function() {
     inPreroll = true;
 
     if (!onWelcome) {
+        if (selectedTag[selectedTag.length - 1] == 's') {
+            introText += '\u2019 Mixtape'
+        } else {
+            introText += '\u2019' + 's Mixtape';
+        }
+
         $('.stack .poster').velocity('fadeIn');
-        $('.stack .poster').find('.loading').text(selectedTag).css('opacity',1);
+        $('.stack .poster').find('.loading').text(introText).css('opacity',1);
         $skipsRemaining.hide();
     }
 
