@@ -926,11 +926,15 @@ var updateTagDisplay = function() {
             tag = tag.toUpperCase();
         }
 
-        $filtersButton.addClass('updated');
-        _.delay(function() {
+        if (!$fixedControls.hasClass('expand')) {
+            $filtersButton.addClass('updated');
+            _.delay(function() {
+                $currentDj.text(tag);
+                $filtersButton.removeClass('updated');
+            }, 250)
+        } else {
             $currentDj.text(tag);
-            $filtersButton.removeClass('updated');
-        }, 250)
+        }
     }
 }
 
