@@ -1335,16 +1335,19 @@ h1,h2,h3,h4,h5,h6 {
         margin-bottom: @line-height-computed;
         font-size: @font-size-small;
         text-transform: uppercase;
+        color: #fff;
+        border-color: fadeout(#fff, 60%);
+        background: transparent;
     }
 
     label.btn.btn-default.active.clean {
-        background: @brand-success;
+        background: fadeout(@brand-success, 60%);
         border-color: @brand-success;
         color: #fff;
     }
 
     label.btn.btn-default.active.explicit {
-        background: @tag-3;
+        background: fadeout(@tag-3, 60%);
         border-color: @tag-3;
         color: #fff;
     }
@@ -1368,16 +1371,22 @@ h1,h2,h3,h4,h5,h6 {
 		}
 	}
 
-    .language-filter-wrapper {
-        background: lighten(#e7e4dd, 5%);
-        margin: 0 -@grid-gutter-width;
-        padding: @grid-gutter-width;
-    }
+/*     .language-filter-wrapper {
+    background: lighten(#e7e4dd, 5%);
+    margin: 0 -@grid-gutter-width;
+    padding: @grid-gutter-width;
+} */
 
     .filter-footer {
         background: @blue-darker;
         margin: 0 -@grid-gutter-width;
         padding: @grid-gutter-width @grid-gutter-width 6rem;
+
+        .tools,
+        .credits,
+        .language-wrapper {
+            .make-sm-column(4);
+        }
     }
 
     .filter-footer h3 {
@@ -1390,9 +1399,6 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
 	.credits {
-		.clearfix;
-		clear: both;
-
 		p {
 			margin-bottom: 0.5rem;
 		}
