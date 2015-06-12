@@ -268,6 +268,14 @@ h1,h2,h3,h4,h5,h6 {
 		letter-spacing: 0.1rem;
 	}
 
+    .sponsor {
+        margin-top: 2rem;
+    }
+
+    .sponsor img {
+        width: 71px;
+    }
+
 
 	.language-advisory {
 		font-size: 0.7rem;
@@ -835,8 +843,8 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
 	.review {
-		background: @white;
-		color: @music-dark;
+		background: #fff;
+		color: @text-color;
 		padding: @grid-gutter-width;
 		font-size: @font-size-base * 1.2;
 		line-height: 1.4;
@@ -979,12 +987,13 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .tag-header {
-	font-size: @font-size-small;
-	font-family: 'Knockout 31 4r';
+    font-size: @font-size-base * 0.71;
+	/* font-family: 'Knockout 31 4r'; */
 	text-transform: uppercase;
 	letter-spacing: 0.1rem;
 	color: rgba(255,255,255,0.5);
 	display: inline-block;
+    display: none;
 }
 
 .song-tags {
@@ -992,7 +1001,9 @@ h1,h2,h3,h4,h5,h6 {
 	margin-bottom: 0;
 	white-space: nowrap;
 	color: rgba(255,255,255,0.5);
-	font-size: @font-size-small;
+	font-size: @font-size-base * 0.71;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
 	max-height: 100%;
 	.transition(all 0.2s ease-in-out);
 	.scaleY(1);
@@ -1005,18 +1016,53 @@ h1,h2,h3,h4,h5,h6 {
 	li {
 		display: inline;
 
-		&:after {
-			content: ", ";
-		}
-
+/* 		&:after {
+    content: ", ";
+}
+ */
 		&:last-child:after {
 			content: "";
 		}
 	}
 
+    a {
+        border-width: 1px;
+        border-style: solid;
+        padding: 0.2rem 0.4rem;
+        .transition(all 0.2s ease-in-out);
+    }
+
     a:link,
     a:hover {
         text-decoration: none;
+    }
+
+    a[data-tag='Classical']         { background: transparent; border-color: @tag-1; color: @tag-1; }
+    a[data-tag='Country/Americana'] { background: transparent; border-color: @tag-2; color: @tag-2; }
+    a[data-tag='Electronic']        { background: transparent; border-color: @tag-3; color: @tag-3; }
+    a[data-tag='Hip-Hop']           { background: transparent; border-color: @tag-4; color: @tag-4; }
+    a[data-tag='Jazz']              { background: transparent; border-color: @tag-5; color: lighten(@tag-5, 10%); }
+    a[data-tag='Latin']             { background: transparent; border-color: @tag-6; color: lighten(@tag-6, 10%); }
+    a[data-tag='Pop']               { background: transparent; border-color: @tag-7; color: lighten(@tag-7, 15%); }
+    a[data-tag='R&B']               { background: transparent; border-color: @tag-8; color: lighten(@tag-8, 15%); }
+    a[data-tag='Rock']              { background: transparent; border-color: @tag-9; color: lighten(@tag-9, 10%); }
+    a[data-tag='\m/ >_< \m/']       { background: transparent; border-color: @tag-10; color: lighten(@tag-10, 10%); }
+    a[data-tag='World']             { background: transparent; border-color: @tag-11; color: lighten(@tag-11, 10%); }
+
+    .no-touch & {
+        a:hover { color: #fff; }
+
+        a[data-tag='Classical']:hover         { background: @tag-1; }
+        a[data-tag='Country/Americana']:hover { background: @tag-2; }
+        a[data-tag='Electronic']:hover        { background: @tag-3; }
+        a[data-tag='Hip-Hop']:hover           { background: @tag-4; }
+        a[data-tag='Jazz']:hover              { background: @tag-5; }
+        a[data-tag='Latin']:hover             { background: @tag-6; }
+        a[data-tag='Pop']:hover               { background: @tag-7; }
+        a[data-tag='R&B']:hover               { background: @tag-8; }
+        a[data-tag='Rock']:hover              { background: @tag-9; }
+        a[data-tag='\m/ >_< \m/']:hover       { background: @tag-10; }
+        a[data-tag='World']:hover             { background: @tag-11; }
     }
 }
 
