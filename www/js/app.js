@@ -68,6 +68,7 @@ var firstReviewerSong = false;
 var playExplicit = null;
 var adCounter = 0;
 var renderAd = false;
+var reviewerDeepLink = false;
 
 /*
  * Run on page load.
@@ -161,7 +162,33 @@ var onDocumentLoad = function(e) {
     loadState();
 
     setInterval(checkSkips, 60000);
+
+    hasher.initialized.add(onHashInit);
+    hasher.prependHash = '/';
+    hasher.init();
 }
+
+/*
+ * http://stackoverflow.com/a/196991
+ */
+var toTitleCase = function(str) {
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+/*
+ * Swap modes on hash changes.
+ */
+var onHashInit = function(newHash, oldHash) {
+    if (newHash !== '') {
+        selectedTag = newHash.replace('-', ' ');
+        selectedTag = toTitleCase(selectedTag);
+        firstReviewerSong = true;
+        reviewerDeepLink = true;
+        simpleStorage.set('selectedTag', selectedTag);
+        hasher.setHash('');
+    }
+}
+
 
 /*
  * Shorten Bob's playlist to 3 songs for testing
@@ -236,8 +263,12 @@ var playIntroAudio = function() {
     var introText = selectedTag;
 
     // if on welcome screen, play the intro audio
-    if (onWelcome) {
+    if (onWelcome && !selectedTag) {
         audioFile = APP_CONFIG.WELCOME_AUDIO;
+    }
+
+    if (onWelcome && selectedTag !== null) {
+        audioFile = APP_CONFIG.TAG_AUDIO_INTROS[selectedTag];
     }
 
     // if we have a selected tag, find its audio
@@ -398,6 +429,7 @@ var playNextSong = function() {
 
         hideWelcome();
     } else {
+        // hideWelcome();
         setCurrentSongHeight();
         $html.find('.container-fluid').css('height', songHeight);
         $html.prev().velocity("scroll", {
@@ -1030,11 +1062,22 @@ var swapTapeDeck = function() {
  */
 var onGoButtonClick = function(e) {
     e.preventDefault();
+
+    if (selectedTag !== null) {
+        e.preventDefault();
+        buildPlaylist();
+        updateTagDisplay();
+        swapTapeDeck();
+        playIntroAudio();
+        return;
+    }
+
+
     swapTapeDeck();
     $songs.find('.song').remove();
     playedSongs = [];
     simpleStorage.set('playedSongs', playedSongs);
-    switchTag(null, true);
+    switchTag(selectedTag, true);
     playIntroAudio();
 
     ANALYTICS.trackEvent('shuffle');
@@ -1091,6 +1134,12 @@ var onLanguageChange = function(e) {
  */
 var onContinueButtonClick = function(e) {
     e.preventDefault();
+
+        if (reviewerDeepLink === true) {
+            onGoButtonClick(e);
+            return;
+        }
+
     buildPlaylist();
     updateTagDisplay();
     $landing.velocity('fadeOut');
