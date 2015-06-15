@@ -10,13 +10,6 @@
                 <!-- <h2>{{ COPY.content.subtitle }}</h2> -->
 
                 <div class="landing-firstload-deck go-wrapper">
-                        {# <p>Play a genre</p>
-                        <ul class="tags list-unstyled">
-                            {% for tag in GENRE_TAGS %}
-                            <li><a data-tag="{{ tag }}" href="#">{{ tag }}</a></li>
-                            {% endfor %}
-                        </ul>
-                        <p>Or</p> #}
                     <a class="go" href="#">Play</a>
                 </div>
                 <div class="landing-return-deck go-wrapper">
@@ -25,8 +18,6 @@
 
                 <div class="tags-wrapper">
                     <p class="language-advisory"><span class="fa fa-warning"></span> ADVISORY: Some of these songs contain explicit language. <a class="go-clean" href="#">Play Only Clean Songs <span class="icon-play"></span></a></p>
-                    <!-- <p><a href="#"><i class="icon-rdio"></i> Listen on Rdio</a></p>
-                    <p><a href="#"><i class="icon-spotify-circled"></i> Listen on Spotify</a></p> -->
                     <div class="sponsor">
                         <p>Support comes from <img src="{{ S3_BASE_URL }}/assets/img/miller.png"></p>
                     </div>
@@ -40,7 +31,7 @@
         <div class="tips">
             <p class="tip-one">Turn up your volume</p>
             <p class="tip-two">Turn down the lights</p>
-            <p class="tip-three">Shuffling {{ total_songs }} songs</p>
+            <p class="tip-three">Shuffling <span class="playlist-length">{{ total_songs }}</span> songs</p>
         </div>
 
         <a class="skip-intro btn btn-default">Skip Intro</a>

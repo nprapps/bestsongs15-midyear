@@ -378,6 +378,8 @@ The Google Analytics events tracked in this application are:
 |bestsongs15-midyear|song-skip|`artist`-`title`||
 |bestsongs15-midyear|tag-finish|`selected-tag`||
 |bestsongs15-midyear|switch-tag|`selected-tag`||
+|bestsongs15-midyear|switch-tag-songs|`session-songs-played`||
+|bestsongs15-midyear|reviewer-deep-link|`selected-tag`||
 |bestsongs15-midyear|shuffle|||
 |bestsongs15-midyear|shuffle-clean|||
 |bestsongs15-midyear|explicit-language-on|||

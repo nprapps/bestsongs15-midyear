@@ -182,10 +182,22 @@ var onHashInit = function(newHash, oldHash) {
     if (newHash !== '') {
         selectedTag = newHash.replace('-', ' ');
         selectedTag = toTitleCase(selectedTag);
+        var buttonText = selectedTag;
         firstReviewerSong = true;
         reviewerDeepLink = true;
+
         simpleStorage.set('selectedTag', selectedTag);
+
+        if (buttonText[buttonText.length - 1] == 's') {
+            buttonText += '\u2019 Mixtape'
+        } else {
+            buttonText += '\u2019' + 's Mixtape';
+        }
+
+        $('.go-wrapper a').html('Play ' + buttonText).addClass('small');
+
         hasher.setHash('');
+        ANALYTICS.trackEvent('reviewer-deep-link', selectedTag);
     }
 }
 
@@ -580,9 +592,7 @@ var updateTotalSongsPlayed = function() {
     sessionSongsPlayed++;
     simpleStorage.set('totalSongsPlayed', totalSongsPlayed);
 
-    if (totalSongsPlayed % 5 === 0) {
-        ANALYTICS.trackEvent('songs-played', null, 5);
-    }
+    ANALYTICS.trackEvent('song-played', currentSong['artist'] + ' - ' + currentSong['title']);
 }
 
 /*
@@ -1063,7 +1073,7 @@ var swapTapeDeck = function() {
 var onGoButtonClick = function(e) {
     e.preventDefault();
 
-    if (selectedTag !== null) {
+    if (reviewerDeepLink === true) {
         e.preventDefault();
         buildPlaylist();
         updateTagDisplay();
@@ -1098,7 +1108,12 @@ var onGoCleanButtonClick = function(e) {
 
     $languageStatus.removeClass('explicit').text('Clean');
 
-    onGoButtonClick(e);
+    if (playedSongs.length > 0 || selectedTag !== null) {
+        onContinueButtonClick(e);
+    } else {
+        onGoButtonClick(e);
+    }
+
     ANALYTICS.trackEvent('shuffle-clean');
 }
 
@@ -1135,10 +1150,10 @@ var onLanguageChange = function(e) {
 var onContinueButtonClick = function(e) {
     e.preventDefault();
 
-        if (reviewerDeepLink === true) {
-            onGoButtonClick(e);
-            return;
-        }
+    if (reviewerDeepLink === true) {
+        onGoButtonClick(e);
+        return;
+    }
 
     buildPlaylist();
     updateTagDisplay();
