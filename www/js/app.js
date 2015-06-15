@@ -65,7 +65,7 @@ var fixedHeaderHeight = null;
 var is_small_screen = false
 var inPreroll = false;
 var firstReviewerSong = false;
-var playExplicit = null;
+var playExplicit = true;
 var adCounter = 0;
 var renderAd = false;
 var reviewerDeepLink = false;
@@ -732,12 +732,16 @@ var loadState = function() {
     usedSkips = simpleStorage.get('usedSkips') || [];
     totalSongsPlayed = simpleStorage.get('totalSongsPlayed') || 0;
     songHistory = simpleStorage.get('songHistory') || {};
+
     playExplicit = simpleStorage.get('playExplicit') !== undefined ? simpleStorage.get('playExplicit') : true;
 
     if (playExplicit === false) {
         $languageToggle.find('.clean').button('toggle');
+        $languageStatus.removeClass('explicit').text('Clean');
     } else {
         $languageToggle.find('.explicit').button('toggle');
+        $languageStatus.addClass('explicit').text('Explicit');
+
     }
 
     if (ALL_HISTORY) {
