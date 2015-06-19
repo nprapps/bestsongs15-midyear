@@ -44,7 +44,7 @@ var RESET_STATE = (window.location.search.indexOf('resetstate') >= 0);
 var ALL_HISTORY = (window.location.search.indexOf('allhistory') >= 0);
 
 // Constants
-var AD_FREQUENCY = 5;
+var AD_FREQUENCY = 2;
 
 // Global state
 var firstShareLoad = true;
@@ -69,6 +69,7 @@ var playExplicit = true;
 var adCounter = 0;
 var renderAd = false;
 var reviewerDeepLink = false;
+var nextAdTime = moment().add(1,'h');
 
 /*
  * Run on page load.
@@ -361,7 +362,7 @@ var onSkipIntroClick = function(e) {
 var playNextSong = function() {
     // load ad data if ad frequency count is reached
     // increment counter and load song data if not
-    if (adCounter === AD_FREQUENCY) {
+    if (adCounter === 2 || moment().isAfter(nextAdTime)) {
         renderAd = true;
         var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/061015_MillerHighLife_finest_SongsIntro.mp3';
         var nextSong = {
@@ -369,7 +370,9 @@ var playNextSong = function() {
             'title': 'Miller High Life'
         }
 
-        adCounter = 0;
+        nextAdTime = moment().add(1,'h');
+        adCounter++;
+
         ANALYTICS.trackEvent('render-ad');
     } else {
         renderAd = false;
