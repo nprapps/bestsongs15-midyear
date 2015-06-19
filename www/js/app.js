@@ -363,10 +363,10 @@ var playNextSong = function() {
     // increment counter and load song data if not
     if (adCounter === AD_FREQUENCY) {
         renderAd = true;
-        var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/addemo.mp3';
+        var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/061015_MillerHighLife_finest_SongsIntro.mp3';
         var nextSong = {
             'artist': 'Advertisement',
-            'title': 'Advertiser'
+            'title': 'Miller High Life'
         }
 
         adCounter = 0;
