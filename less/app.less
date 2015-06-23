@@ -352,7 +352,7 @@ h1,h2,h3,h4,h5,h6 {
 
 	&:after {
 		content: ' ';
-		background: @tag-3;
+		background: @tag-10;
 		opacity: 0.6;
 		position: absolute;
 		top: 0;
@@ -735,13 +735,14 @@ h1,h2,h3,h4,h5,h6 {
         .container-fluid {
             position: relative;
         }
-        
+
         iframe {
             position: absolute;
             top: 0;
             right: 0;
             bottom: 0;
             left: 0;
+            overflow: hidden;
         }
     }
 
@@ -1769,17 +1770,17 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 @-webkit-keyframes cycle-colors {
-	0%   { background: @tag-1; }
+	0%   { background: @tag-10; }
 	25%  { background: @tag-5; }
-	50% { background: @tag-10; }
+	50% { background: @tag-1; }
 	75% { background: @tag-5; }
-	100% { background: @tag-1; }
+	100% { background: @tag-10; }
 }
 
 @keyframes cycle-colors {
-	0%   { background: @tag-1; }
+	0%   { background: @tag-10; }
 	25%  { background: @tag-5; }
-	50% { background: @tag-10; }
+	50% { background: @tag-1; }
 	75% { background: @tag-5; }
-	100% { background: @tag-1; }
+	100% { background: @tag-10; }
 }
