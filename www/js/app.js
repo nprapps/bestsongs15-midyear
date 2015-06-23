@@ -366,7 +366,7 @@ var playNextSong = function() {
         renderAd = true;
         var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/miller_ad.mp3';
         var nextSong = {
-            'artist': 'Advertisement',
+            'artist': 'NPR thanks our sponsors',
             'title': 'Miller High Life'
         }
 
