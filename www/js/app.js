@@ -1,6 +1,7 @@
 // Global jQuery references
 var $html = null;
 var $body = null;
+var $title = null;
 var $shareModal = null;
 var $goButton = null;
 var $goCleanButton = null;
@@ -78,6 +79,7 @@ var onDocumentLoad = function(e) {
     // Cache jQuery references
     $html = $('html');
     $body = $('body');
+    $title = $('title');
     $shareModal = $('#share-modal');
     $goButton = $('.go');
     $goCleanButton = $('.go-clean');
@@ -426,7 +428,7 @@ var playNextSong = function() {
 
     $playerArtist.html(nextSong['artist']);
     $playerTitle.html(nextSong['title']);
-    document.title = nextSong['artist'] + ' \u2014 \u2018' + nextSong['title'] + '\u2019 | ' + COPY.content['project_name'];
+    $title.html(nextSong['artist'] + ' \u2014 \u2018' + nextSong['title'] + '\u2019 | ' + COPY.content['project_name']);
     $skipsRemaining.show();
 
     inPreroll = false;
