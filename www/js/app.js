@@ -831,10 +831,11 @@ var buildListeningHistory = function() {
             return songID === song['id']
         });
 
-
         var context = $.extend(APP_CONFIG, song, {
+            'showQuotes': song['title'].match(':') && song['title'].match('’') && song['title'].match('‘') ? false : true,
             'mixtapeName': makeMixtapeName(song)
         });
+
         var html = JST.song(context);
         $songs.append(html);
     };
