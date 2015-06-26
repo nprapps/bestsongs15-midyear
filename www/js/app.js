@@ -527,9 +527,6 @@ var preloadSongImages = function() {
 
     var songArt = new Image();
     songArt.src = 'http://npr.org' + nextSong['song_art'];
-
-    var reviewerImage = new Image();
-    reviewerImage.src = APP_CONFIG.S3_BASE_URL + '/assets/img/' + APP_CONFIG.REVIEWER_IMAGES[nextSong['reviewer']];
 }
 
 /*
