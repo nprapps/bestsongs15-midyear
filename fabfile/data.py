@@ -83,7 +83,7 @@ def clean_songs(verify):
 
             if row['review']:
                 row['review'] = smartypants(row['review'])
-                
+
             # Verify links
             if verify:
                 try:
@@ -160,6 +160,7 @@ def generate_rdio_playlist():
     Generate a list of Rdio track IDs
     """
 
+    secrets = app_config.get_secrets()
     state = {}
     rdio_api = Rdio(
         secrets['RDIO_CONSUMER_KEY'],
@@ -187,6 +188,7 @@ def generate_spotify_playlist():
 
     sp = spotipy.Spotify()
     songs = []
+    secrets = app_config.get_secrets()
 
     with open('data/songs.csv') as f:
         rows = csv.DictReader(f)

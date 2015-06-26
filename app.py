@@ -39,6 +39,26 @@ def index():
 
     return make_response(render_template('index.html', **context))
 
+@app.route('/seamus')
+def seamus():
+    """
+    Preview for Seamus page
+    """
+    context = make_context()
+
+    # Read the books JSON into the page.
+    with open('data/songs.json', 'rb') as readfile:
+        songs_data = json.load(readfile)
+
+        for song in songs_data:
+            song['song_art'] = song['song_art'].replace('-s500', '-s200')
+
+        songs = sorted(songs_data, key=lambda k: (k['artist'].lower()[4:] if k['artist'].lower().startswith('the ') else k['artist'].lower()))
+
+    context['songs'] = songs
+
+    return render_template('seamus-preview.html', **context)
+
 app.register_blueprint(static.static)
 app.register_blueprint(oauth.oauth)
 
