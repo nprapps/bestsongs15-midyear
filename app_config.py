@@ -176,95 +176,55 @@ GENRE_TAGS = [
 
 REVIEWER_TAGS = [
     'Bob Boilen',
-    'Robin Hilton',
     'Ann Powers',
-    
-    'Rita Houston',
-    'Jason Bentley',
-    'Kevin Cole',
+    'Ali Shaheed Muhammad',
 
     'Jason King',
-    'Felix Contreras',
-    'Jasmine Garsd',
-
     'David Dye',
-    'Stephen Thompson',
+    'Rita Houston',
+
     'Anastasia Tsioulcas',
-
-    'Tom Huizenga',
-    'Patrick Jarenwattananon',
-    'Frannie Kelley',
-
-    'Lars Gotrich',
+    'Felix Contreras',
+    'Kevin Cole'
 ]
 
 REVIEWER_IMAGES = {
     # With playlists
     'Bob Boilen': 'bob.jpg',
-    'Robin Hilton': 'robin.jpg',
     'Ann Powers': 'ann.jpg',
-    'Stephen Thompson': 'sthompson.jpg',
-    'Anastasia Tsioulcas': 'tsioulcas.jpg',
-    'Tom Huizenga': 'huizenga.jpg',
-    'Patrick Jarenwattananon': 'jarenwattananon.jpg',
-    'Lars Gotrich': 'lars.jpg',
-    'Frannie Kelley': 'kelley.jpg',
+    'Ali Shaheed Muhammad': 'ali.jpg',
     'Jason King': 'jason-king.jpg',
-    'Felix Contreras': 'contreras.jpg',
-    'Jasmine Garsd': 'jasmine-garsd.jpg',
-    'Jason Bentley': 'jason-bentley.jpg',
     'David Dye': 'david-dye.jpg',
     'Rita Houston': 'rita-houst.jpg',
-    'Kevin Cole': 'kevin-cole.jpg',
-
-    # Without playlists
-    'Otis Hart': 'otis-hart.jpg',
-    'Jacob Ganz': 'jacob.jpg',
-    'Kiana Fitzgerald': 'kiana.jpg',
-    'Bobby Carter': 'bobby-carter.jpg',
-    'Cedric Shine': 'cedric-shine.jpg',
-    'Mike Katzif': 'mike-katzif.jpg',
-    'Kelly McCartney': 'kelly-mccartney.jpg'
+    'Anastasia Tsioulcas': 'tsioulcas.jpg',
+    'Felix Contreras': 'contreras.jpg',
+    'Kevin Cole': 'kevin-cole.jpg'
 }
 
 REVIEWER_BIOS = {
-    'Bob Boilen': 'Creator/host All Songs Considered and Tiny Desk Concerts',
-    'Robin Hilton': 'Co-host, All Songs Considered. Crying on the outside; laughing on the inside',
-    'Ann Powers': 'Critic, meaning-monger, melody freak',
-    'Stephen Thompson': 'Likes writing, talking, melancholy, misanthropy, these songs, you',
-    'Anastasia Tsioulcas': 'Co-host of the blog Deceptive Cadence, musical omnivore',
-    'Tom Huizenga': 'Co-host of the blog Deceptive Cadence, ears wide open',
-    'Patrick Jarenwattananon': 'Jazz producer with an Internet connection',
-    'Lars Gotrich': 'Beer drinker, BBQ eater',
-    'Frannie Kelley': 'Editor and co-host of Microphone Check',
-    'Jason King': 'Host and curator of NPR&B',
-    'Felix Contreras': 'Dad, drummer, Deadhead',
-    'Jasmine Garsd': 'Co-host of NPR&rsquo;s Alt.Latino',
-    'Jason Bentley': 'Music director at KCRW and host of Morning Becomes Eclectic',
-    'David Dye': 'Host of WXPN&rsquo;s World Cafe',
-    'Rita Houston': 'Program director at WFUV in New York City',
-    'Kevin Cole': 'Program director and host at KEXP in Seattle',
+    'Bob Boilen': 'Co-host of All Songs Considered ',
+    'Ann Powers': 'Pop Critic for NPR Music',
+    'Ali Shaheed Muhammad': 'Host of NPR Music&rsquo;s Microphone Check',
+    'Jason King': 'Host of NPR R&B',
+    'David Dye': 'Host of NPR&rsquo;s World Cafe',
+    'Rita Houston': 'Program Director at WFUV in New York City',
+    'Anastasia Tsioulcas': 'Co-host of NPR Classical',
+    'Felix Contreras': 'Co-host of NPR Music&rsquo;s Alt.Latino',
+    'Kevin Cole': 'Program Director at KEXP in Seattle'
 }
 
 WELCOME_AUDIO = '/npr/specialmusic/2014/12/20141208_specialmusic_welcome.mp3'
 
 TAG_AUDIO_INTROS = {
     'Bob Boilen': '/npr/specialmusic/2014/12/20141208_specialmusic_bob.mp3',
-    'Robin Hilton': '/npr/specialmusic/2014/12/20141208_specialmusic_robin.mp3',
     'Ann Powers': '/npr/specialmusic/2014/12/20141208_specialmusic_ann.mp3',
-    'Stephen Thompson': '/npr/specialmusic/2014/12/20141208_specialmusic_stephen.mp3',
-    'Anastasia Tsioulcas': '/npr/specialmusic/2014/12/20141208_specialmusic_anastasia.mp3',
-    'Tom Huizenga': '/npr/specialmusic/2014/12/20141208_specialmusic_tom.mp3',
-    'Patrick Jarenwattananon': '/npr/specialmusic/2014/12/20141208_specialmusic_patrick.mp3',
-    'Lars Gotrich': '/npr/specialmusic/2014/12/20141208_specialmusic_lars.mp3',
-    'Frannie Kelley': '/npr/specialmusic/2014/12/20141208_specialmusic_frannie.mp3',
+    'Ali Shaheed Muhammad': '/npr/specialmusic/2014/12/20141209_specialmusic_jasonbentleycurator.mp3',
     'Jason King': '/npr/specialmusic/2014/12/20141208_specialmusic_jason.mp3',
-    'Felix Contreras': '/npr/specialmusic/2014/12/20141208_specialmusic_felix.mp3',
-    'Jasmine Garsd': '/npr/specialmusic/2014/12/20141208_specialmusic_jasmine.mp3',
-    'Jason Bentley': '/npr/specialmusic/2014/12/20141209_specialmusic_jasonbentleycurator.mp3',
     'David Dye': '/npr/specialmusic/2014/12/20141208_specialmusic_david.mp3',
     'Rita Houston': '/npr/specialmusic/2014/12/20141208_specialmusic_rita.mp3',
-    'Kevin Cole': '/npr/specialmusic/2014/12/20141208_specialmusic_kevin.mp3',
+    'Anastasia Tsioulcas': '/npr/specialmusic/2014/12/20141208_specialmusic_anastasia.mp3',
+    'Felix Contreras': '/npr/specialmusic/2014/12/20141208_specialmusic_felix.mp3',
+    'Kevin Cole': '/npr/specialmusic/2014/12/20141208_specialmusic_kevin.mp3'
 }
 
 SKIP_LIMIT = 6
