@@ -132,9 +132,6 @@ def clean_songs(verify):
                     if song_curator not in app_config.REVIEWER_TAGS:
                         print "--> Genre %s is not a valid genre" % (song_curator)
 
-                if row['reviewer'] not in app_config.REVIEWER_IMAGES:
-                    print '--> Reviewer %s does not have a headshot' % row['reviewer']
-
                 if row['media_url'] in unique_audio:
                     print '--> Duplicate audio url: %s' % row['media_url']
                 else:
