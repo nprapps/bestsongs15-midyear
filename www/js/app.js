@@ -70,7 +70,8 @@ var playExplicit = true;
 var adCounter = 0;
 var renderAd = false;
 var reviewerDeepLink = false;
-var nextAdTime = moment().add(1,'h');
+var nextAdTime = null;
+var pausedTime = null;
 
 /*
  * Run on page load.
@@ -616,6 +617,14 @@ var onPlayClick = function(e) {
     $audioPlayer.jPlayer('play');
     $play.hide();
     $pause.show();
+
+    // Increase time until next ad will display by amount of time player is paused
+    if (pausedTime !== null && nextAdTime !== null) {
+        var elapsedTime = moment().subtract(pausedTime);
+        nextAdTime = nextAdTime.add(elapsedTime);
+
+        pausedTime = null;
+    }
 }
 
 /*
@@ -626,6 +635,8 @@ var onPauseClick = function(e) {
     $audioPlayer.jPlayer('pause');
     $pause.hide();
     $play.show();
+
+    pausedTime = moment();
 }
 
 /*
