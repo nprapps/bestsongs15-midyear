@@ -416,6 +416,7 @@ var playNextSong = function() {
     }
 
     var context = $.extend(APP_CONFIG, nextSong, {
+        'showQuotes': nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'].match('‘') ? false : true,
         'mixtapeName': makeMixtapeName(nextSong)
     });
 
@@ -428,6 +429,13 @@ var playNextSong = function() {
 
     $playerArtist.html(nextSong['artist']);
     $playerTitle.html(nextSong['title']);
+
+    if (nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'] || renderAd === true) {
+        $playerTitle.addClass('no-quotes');
+    } else {
+        $playerTitle.removeClass('no-quotes');
+    }
+
     $title.html(nextSong['artist'] + ' \u2014 \u2018' + nextSong['title'] + '\u2019 | ' + COPY.content['project_name']);
     $skipsRemaining.show();
 

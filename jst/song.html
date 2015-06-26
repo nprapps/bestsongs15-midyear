@@ -4,7 +4,7 @@
             <img class="album-cover img-responsive" src="http://npr.org<%= song_art %>">
             <div class="song-info-wrapper">
                 <h2 class="artist"><%= artist %></h2>
-                <h1 class="song-title">&lsquo;<%= title %>&rsquo;</h1>
+                <h1 class="song-title<% if (showQuotes === false) { %> no-quotes<% } %>"><%= title %></h1>
 
                 <div class="song-tags">
                     <h3 class="tag-header">Listen to more</h3>

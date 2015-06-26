@@ -851,6 +851,23 @@ h1,h2,h3,h4,h5,h6 {
 		font-size: @font-size-base * 1.5;
 	}
 
+    &:before {
+        content: '\2018';
+    }
+
+    &:after {
+        content: '\2019';
+    }
+
+    &.no-quotes {
+        text-indent: 0;
+
+        &:before,
+        &:after {
+            content: '';
+        }
+    }
+
 }
 
 .artist {
