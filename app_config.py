@@ -19,7 +19,9 @@ NAMES
 """
 # Project name to be used in urls
 # Use dashes, not underscores!
-PROJECT_SLUG = 'bestsongs15-midyear'
+PROJECT_SLUG = 'best-songs-2015-so-far'
+# PROJECT_SLUG = 'miller'
+
 
 # Project name to be used in file paths
 PROJECT_FILENAME = 'bestsongs15_midyear'
@@ -216,15 +218,15 @@ REVIEWER_BIOS = {
 WELCOME_AUDIO = '/npr/specialmusic/2014/12/20141208_specialmusic_welcome.mp3'
 
 TAG_AUDIO_INTROS = {
-    'Bob Boilen': '/npr/specialmusic/2014/12/20141208_specialmusic_bob.mp3',
-    'Ann Powers': '/npr/specialmusic/2014/12/20141208_specialmusic_ann.mp3',
-    'Ali Shaheed Muhammad': '/npr/specialmusic/2014/12/20141209_specialmusic_jasonbentleycurator.mp3',
-    'Jason King': '/npr/specialmusic/2014/12/20141208_specialmusic_jason.mp3',
-    'David Dye': '/npr/specialmusic/2014/12/20141208_specialmusic_david.mp3',
-    'Rita Houston': '/npr/specialmusic/2014/12/20141208_specialmusic_rita.mp3',
-    'Anastasia Tsioulcas': '/npr/specialmusic/2014/12/20141208_specialmusic_anastasia.mp3',
-    'Felix Contreras': '/npr/specialmusic/2014/12/20141208_specialmusic_felix.mp3',
-    'Kevin Cole': '/npr/specialmusic/2014/12/20141208_specialmusic_kevin.mp3'
+    'Bob Boilen': '/npr/specialmusic/2015/06/20150626_specialmusic_bobboilen.mp3',
+    'Ann Powers': '/npr/specialmusic/2015/06/20150626_specialmusic_annpowers.mp3',
+    'Ali Shaheed Muhammad': '/npr/specialmusic/2015/06/20150626_specialmusic_alishaheedmuhammad.mp3',
+    'Jason King': '/npr/specialmusic/2015/06/20150626_specialmusic_jasonking.mp3',
+    'David Dye': '/npr/specialmusic/2015/06/20150626_specialmusic_daviddye.mp3',
+    'Rita Houston': '/npr/specialmusic/npr/specialmusic/2015/06/20150626_specialmusic_ritahouston.mp3',
+    'Anastasia Tsioulcas': '/npr/specialmusic/2015/06/20150626_specialmusic_anastasiatsioulcas.mp3',
+    'Felix Contreras': '/npr/specialmusic/2015/06/20150626_specialmusic_felixc.mp3',
+    'Kevin Cole': '/npr/specialmusic/npr/specialmusic/2015/06/20150626_specialmusic_kevincole.mp3'
 }
 
 SKIP_LIMIT = 6
