@@ -318,7 +318,7 @@ var playIntroAudio = function() {
 
     $playerTitle.addClass('no-quotes');
     $playerArtist.text('');
-    $playerTitle.text('');
+    $playerTitle.addClass('no-quotes').text('');
 
     if (!NO_AUDIO){
         $audioPlayer.jPlayer('play');
