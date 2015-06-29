@@ -223,7 +223,7 @@ TAG_AUDIO_INTROS = {
     'Ali Shaheed Muhammad': '/npr/specialmusic/2015/06/20150626_specialmusic_alishaheedmuhammad.mp3',
     'Jason King': '/npr/specialmusic/2015/06/20150626_specialmusic_jasonking.mp3',
     'David Dye': '/npr/specialmusic/2015/06/20150626_specialmusic_daviddye.mp3',
-    'Rita Houston': '/npr/specialmusic/npr/specialmusic/2015/06/20150626_specialmusic_ritahouston.mp3',
+    'Rita Houston': '/npr/specialmusic/2015/06/20150626_specialmusic_ritahouston.mp3',
     'Anastasia Tsioulcas': '/npr/specialmusic/2015/06/20150626_specialmusic_anastasiatsioulcas.mp3',
     'Felix Contreras': '/npr/specialmusic/2015/06/20150626_specialmusic_felixc.mp3',
     'Kevin Cole': '/npr/specialmusic/npr/specialmusic/2015/06/20150626_specialmusic_kevincole.mp3'
