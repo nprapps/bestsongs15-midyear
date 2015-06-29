@@ -186,7 +186,7 @@ var onHashInit = function(newHash, oldHash) {
         firstReviewerSong = true;
         reviewerDeepLink = true;
 
-        simpleStorage.set('selectedTag', selectedTag);
+        simpleStorage.set('songs15MidYearSelectedTag', selectedTag);
 
         if (buttonText[buttonText.length - 1] == 's') {
             buttonText += '\u2019 Mixtape'
@@ -533,7 +533,7 @@ var checkSongHistory = function(song) {
     }
 
     songHistory[song['id']].push(moment.utc());
-    simpleStorage.set('songHistory', songHistory);
+    simpleStorage.set('songs15MidYearSongHistory', songHistory);
     $songsRemaining.text(SONG_DATA.length - _.size(songHistory) + ' songs remaining');
 
     return true;
@@ -567,7 +567,7 @@ var nextPlaylist = function() {
 var updateTotalSongsPlayed = function() {
     totalSongsPlayed++;
     sessionSongsPlayed++;
-    simpleStorage.set('totalSongsPlayed', totalSongsPlayed);
+    simpleStorage.set('songs15MidYearTotalSongsPlayed', totalSongsPlayed);
 
     ANALYTICS.trackEvent('song-played', currentSong['artist'] + ' - ' + currentSong['title']);
 }
@@ -648,7 +648,7 @@ var skipSong = function() {
         }
 
         playNextSong();
-        simpleStorage.set('usedSkips', usedSkips);
+        simpleStorage.set('songs15MidYearUsedSkips', usedSkips);
         writeSkipsRemaining();
     }
 }
@@ -672,7 +672,7 @@ var checkSkips = function() {
         }
     }
 
-    simpleStorage.set('usedSkips', usedSkips);
+    simpleStorage.set('songs15MidYearUsedSkips', usedSkips);
     writeSkipsRemaining();
 }
 
@@ -704,13 +704,13 @@ var writeSkipsRemaining = function() {
  * Load state from browser storage
  */
 var loadState = function() {
-    playedSongs = simpleStorage.get('playedSongs') || [];
-    selectedTag = simpleStorage.get('selectedTag') || null;
-    usedSkips = simpleStorage.get('usedSkips') || [];
-    totalSongsPlayed = simpleStorage.get('totalSongsPlayed') || 0;
-    songHistory = simpleStorage.get('songHistory') || {};
+    playedSongs = simpleStorage.get('songs15MidYearPlayedSongs') || [];
+    selectedTag = simpleStorage.get('songs15MidYearSelectedTag') || null;
+    usedSkips = simpleStorage.get('songs15MidYearUsedSkips') || [];
+    totalSongsPlayed = simpleStorage.get('songs15MidYearTotalSongsPlayed') || 0;
+    songHistory = simpleStorage.get('songs15MidYearSongHistory') || {};
 
-    playExplicit = simpleStorage.get('playExplicit') !== undefined ? simpleStorage.get('playExplicit') : true;
+    playExplicit = simpleStorage.get('songs15MidYearPlayExplicit') !== undefined ? simpleStorage.get('songs15MidYearPlayExplicit') : true;
 
     if (playExplicit === false) {
         $languageToggle.find('.clean').button('toggle');
@@ -751,10 +751,10 @@ var resetState = function() {
     playedSongs = [];
     selectedTag = null;
 
-    simpleStorage.set('playedSongs', playedSongs);
-    simpleStorage.set('selectedTag', selectedTag);
-    simpleStorage.set('playedPreroll', false);
-    simpleStorage.set('playExplicit', true);
+    simpleStorage.set('songs15MidYearPlayedSongs', playedSongs);
+    simpleStorage.set('songs15MidYearSelectedTag', selectedTag);
+    simpleStorage.set('songs15MidYearPlayedPreroll', false);
+    simpleStorage.set('songs15MidYearPlayExplicit', true);
 }
 
 /*
@@ -762,9 +762,9 @@ var resetState = function() {
  */
 var resetLegalLimits = function() {
     usedSkips = [];
-    simpleStorage.set('usedSkips', usedSkips);
+    simpleStorage.set('songs15MidYearUsedSkips', usedSkips);
     songHistory = {}
-    simpleStorage.set('songHistory', songHistory);
+    simpleStorage.set('songs15MidYearSongHistory', songHistory);
 }
 
 /*
@@ -773,7 +773,7 @@ var resetLegalLimits = function() {
 var markSongPlayed = function(song) {
     playedSongs.push(song['id'])
 
-    simpleStorage.set('playedSongs', playedSongs);
+    simpleStorage.set('songs15MidYearPlayedSongs', playedSongs);
 }
 
 /*
@@ -909,7 +909,7 @@ var switchTag = function(tag, noAutoplay) {
         return;
     } else {
         selectedTag = tag;
-        simpleStorage.set('selectedTag', selectedTag);
+        simpleStorage.set('songs15MidYearSelectedTag', selectedTag);
     }
 
     updateTagDisplay();
@@ -1068,7 +1068,7 @@ var onGoButtonClick = function(e) {
     swapTapeDeck();
     $songs.find('.song').remove();
     playedSongs = [];
-    simpleStorage.set('playedSongs', playedSongs);
+    simpleStorage.set('songs15MidYearPlayedSongs', playedSongs);
     switchTag(selectedTag, true);
     playIntroAudio();
 
@@ -1082,7 +1082,7 @@ var onGoCleanButtonClick = function(e) {
     e.preventDefault();
 
     playExplicit = false;
-    simpleStorage.set('playExplicit', playExplicit);
+    simpleStorage.set('songs15MidYearPlayExplicit', playExplicit);
 
     $languageToggle.find('input[value="clean"]').button('toggle');
     $languageToggle.find('.clean').addClass('active');
@@ -1107,13 +1107,13 @@ var onLanguageChange = function(e) {
 
     if ($(this).hasClass('explicit')) {
         playExplicit = true;
-        simpleStorage.set('playExplicit', playExplicit);
+        simpleStorage.set('songs15MidYearPlayExplicit', playExplicit);
         $languageStatus.addClass('explicit').text('Explicit');
 
         ANALYTICS.trackEvent('explicit-language-on');
     } else {
         playExplicit = false;
-        simpleStorage.set('playExplicit', playExplicit);
+        simpleStorage.set('songs15MidYearPlayExplicit', playExplicit);
         $languageStatus.removeClass('explicit').text('Clean');
 
         ANALYTICS.trackEvent('explicit-language-off');
