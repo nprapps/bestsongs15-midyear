@@ -226,7 +226,7 @@ TAG_AUDIO_INTROS = {
     'Rita Houston': '/npr/specialmusic/2015/06/20150626_specialmusic_ritahouston.mp3',
     'Anastasia Tsioulcas': '/npr/specialmusic/2015/06/20150626_specialmusic_anastasiatsioulcas.mp3',
     'Felix Contreras': '/npr/specialmusic/2015/06/20150626_specialmusic_felixc.mp3',
-    'Kevin Cole': '/npr/specialmusic/npr/specialmusic/2015/06/20150626_specialmusic_kevincole.mp3'
+    'Kevin Cole': '/npr/specialmusic/2015/06/20150626_specialmusic_kevincole.mp3'
 }
 
 SKIP_LIMIT = 6
