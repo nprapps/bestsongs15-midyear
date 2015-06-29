@@ -44,9 +44,6 @@ var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var RESET_STATE = (window.location.search.indexOf('resetstate') >= 0);
 var ALL_HISTORY = (window.location.search.indexOf('allhistory') >= 0);
 
-// Constants
-var AD_FREQUENCY = 2;
-
 // Global state
 var firstShareLoad = true;
 var playedSongs = [];
@@ -67,7 +64,6 @@ var is_small_screen = false
 var inPreroll = false;
 var firstReviewerSong = false;
 var playExplicit = true;
-var adCounter = 0;
 var renderAd = false;
 var reviewerDeepLink = false;
 var nextAdTime = null;
@@ -315,8 +311,6 @@ var playIntroAudio = function() {
     $audioPlayer.jPlayer('setMedia', {
         mp3: 'http://podcastdownload.npr.org/anon.npr-mp3' + audioFile
     });
-
-    $playerTitle.addClass('no-quotes');
     $playerArtist.text('');
     $playerTitle.text('');
 
@@ -365,71 +359,47 @@ var onSkipIntroClick = function(e) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
-    // load ad data if ad frequency count is reached
-    // increment counter and load song data if not
-    if (adCounter === 2 || moment().isAfter(nextAdTime)) {
-        renderAd = true;
-        var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/miller_ad.mp3';
-        var nextSong = {
-            'artist': 'NPR thanks our sponsors',
-            'title': 'Miller High Life'
-        }
-
-        nextAdTime = moment().add(1,'h');
-        adCounter++;
-
-        ANALYTICS.trackEvent('render-ad');
-    } else {
-        renderAd = false;
-        adCounter++;
-
-        // if this is the first song in a curator playlist
-        // get one reviewed by the curator
-        var nextSong = _.find(playlist, function(song) {
-            if (!firstReviewerSong) {
-                return !(_.contains(playedSongs, song['id']));
-            } else {
-                return !(_.contains(playedSongs, song['id'])) && song['reviewer'] === selectedTag;
-            }
-        });
-
-        // some mixtape curators have not reviewed anything
-        // in this case, just use the normal filter
-        if (firstReviewerSong && !nextSong) {
-            var nextSong = _.find(playlist, function(song) {
-                return !(_.contains(playedSongs, song['id']));
-            });
-        }
-
-        firstReviewerSong = false;
-
-        // check if we can play the song legally (4 times per 3 hours)
-        // if we don't have a song, get a new playlist
-        if (nextSong) {
-            var canPlaySong = checkSongHistory(nextSong);
-            if (!canPlaySong) {
-                return;
-            }
+    // if this is the first song in a curator playlist
+    // get one reviewed by the curator
+    var nextSong = _.find(playlist, function(song) {
+        if (!firstReviewerSong) {
+            return !(_.contains(playedSongs, song['id']));
         } else {
-            nextPlaylist();
-            return;
+            return !(_.contains(playedSongs, song['id'])) && song['reviewer'] === selectedTag;
         }
+    });
 
-        var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
+    // some mixtape curators have not reviewed anything
+    // in this case, just use the normal filter
+    if (firstReviewerSong && !nextSong) {
+        var nextSong = _.find(playlist, function(song) {
+            return !(_.contains(playedSongs, song['id']));
+        });
     }
 
+    firstReviewerSong = false;
 
+    var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
+
+    // check if we can play the song legally (4 times per 3 hours)
+    // if we don't have a song, get a new playlist
+    if (nextSong) {
+        var canPlaySong = checkSongHistory(nextSong);
+        if (!canPlaySong) {
+            return;
+        }
+    } else {
+        nextPlaylist();
+        return;
+    }
 
     var context = $.extend(APP_CONFIG, nextSong, {
         'showQuotes': nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'].match('‘') ? false : true,
         'mixtapeName': makeMixtapeName(nextSong)
     });
 
-    if (renderAd === true) {
-        var $html = $(JST.ad(context));
-    } else {
-        var $html = $(JST.song(context));
-    }
+
+    var $html = $(JST.song(context));
     $songs.append($html);
 
     $playerArtist.html(nextSong['artist']);
@@ -476,12 +446,7 @@ var playNextSong = function() {
                 $html.prev().find('.container-fluid').css('height', '0');
                 $html.prev().find('.song-info').css('min-height', 0);
                 $html.prev().css('min-height', '0');
-
-                if ($html.prev().hasClass('ad')) {
-                    $html.prev().addClass('is-hidden');
-                } else {
-                    $html.prev().addClass('small');
-                }
+                $html.prev().addClass('small');
 
                 $html.css('min-height', songHeight)
                     .velocity('fadeIn', {
@@ -508,11 +473,8 @@ var playNextSong = function() {
 
     currentSong = nextSong;
 
-    if (renderAd === false) {
-        markSongPlayed(currentSong);
-        updateTotalSongsPlayed();
-    }
-
+    markSongPlayed(currentSong);
+    updateTotalSongsPlayed();
     writeSkipsRemaining();
     preloadSongImages();
 }
@@ -618,14 +580,6 @@ var onPlayClick = function(e) {
     $audioPlayer.jPlayer('play');
     $play.hide();
     $pause.show();
-
-    // Increase time until next ad will display by amount of time player is paused
-    if (pausedTime !== null && nextAdTime !== null) {
-        var elapsedTime = moment().subtract(pausedTime);
-        nextAdTime = nextAdTime.add(elapsedTime);
-
-        pausedTime = null;
-    }
 }
 
 /*
@@ -636,8 +590,6 @@ var onPauseClick = function(e) {
     $audioPlayer.jPlayer('pause');
     $pause.hide();
     $play.show();
-
-    pausedTime = moment();
 }
 
 /*
