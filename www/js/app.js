@@ -312,7 +312,7 @@ var playIntroAudio = function() {
         mp3: 'http://podcastdownload.npr.org/anon.npr-mp3' + audioFile
     });
     $playerArtist.text('');
-    $playerTitle.text('');
+    $playerTitle.addClass('no-quotes').text('');
 
     if (!NO_AUDIO){
         $audioPlayer.jPlayer('play');
