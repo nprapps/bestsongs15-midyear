@@ -20,6 +20,5 @@
 	{% for song in songs %}
 		<p><strong>{{ song.artist }}, "{{ song.title }}"</strong></p>
 		<p>{{ song.review }}</p>
-		<p><em>– {{ song.reviewer }}{% if song.reviewer_affiliation %}, {{ song.reviewer_affiliation }} {% endif %}</em></p>
 	{% endfor %}
 {% endfor %}
