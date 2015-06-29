@@ -1146,7 +1146,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .fixed-controls {
-	background: #fff;
+	background: @blue-darker;
 	position: fixed;
 	padding-bottom: 5rem;
 	left: 0;
@@ -1414,7 +1414,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .playlist-filters {
-	background-color: @white;
+	background-color: @blue-darker;
 	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
 	-webkit-backface-visibility: hidden; // prevent flickering of bar on scroll in Chrome/Safari
@@ -1426,6 +1426,7 @@ h1,h2,h3,h4,h5,h6 {
 	padding-bottom: 3rem;
 
 	.playlist-filters-wrapper {
+        background: #fff;
 		padding: @grid-gutter-width @grid-gutter-width 0;
 		margin: 0 auto;
 	}
