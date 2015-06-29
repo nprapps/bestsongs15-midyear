@@ -919,7 +919,6 @@ var onReviewerClick = function(e) {
     e.preventDefault();
 
     var reviewer = $(this).data('tag');
-    console.log(reviewer);
     firstReviewerSong = true;
     switchTag(reviewer);
     toggleFilterPanel();
