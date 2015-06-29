@@ -215,7 +215,7 @@ REVIEWER_BIOS = {
     'Kevin Cole': 'Program Director at KEXP in Seattle'
 }
 
-WELCOME_AUDIO = '/npr/specialmusic/2014/12/20141208_specialmusic_welcome.mp3'
+WELCOME_AUDIO = '/npr/specialmusic/2015/06/20150626_specialmusic_bobspecific.mp3'
 
 TAG_AUDIO_INTROS = {
     'Bob Boilen': '/npr/specialmusic/2015/06/20150626_specialmusic_bobboilen.mp3',
