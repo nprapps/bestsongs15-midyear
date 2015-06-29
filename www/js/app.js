@@ -311,6 +311,8 @@ var playIntroAudio = function() {
     $audioPlayer.jPlayer('setMedia', {
         mp3: 'http://podcastdownload.npr.org/anon.npr-mp3' + audioFile
     });
+
+    $playerTitle.addClass('no-quotes');
     $playerArtist.text('');
     $playerTitle.text('');
 
@@ -871,7 +873,6 @@ var onReviewerClick = function(e) {
     e.preventDefault();
 
     var reviewer = $(this).data('tag');
-    console.log(reviewer);
     firstReviewerSong = true;
     switchTag(reviewer);
     toggleFilterPanel();
