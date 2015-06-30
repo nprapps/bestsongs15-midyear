@@ -802,10 +802,7 @@ var resetState = function() {
     playedSongs = [];
     selectedTag = null;
 
-    simpleStorage.set('songs15MidYearPlayedSongs', playedSongs);
-    simpleStorage.set('songs15MidYearSelectedTag', selectedTag);
-    simpleStorage.set('songs15MidYearPlayedPreroll', false);
-    simpleStorage.set('songs15MidYearPlayExplicit', true);
+    simpleStorage.flush();
 }
 
 /*
