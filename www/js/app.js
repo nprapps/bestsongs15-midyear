@@ -781,6 +781,7 @@ var loadState = function() {
 
     if (playedSongs.length > 0) {
         buildListeningHistory();
+        ANALYTICS.trackEvent('resumed-session');
     }
 
     if (playedSongs.length > 0 || selectedTag !== null) {
