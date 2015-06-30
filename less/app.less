@@ -784,10 +784,10 @@ h1,h2,h3,h4,h5,h6 {
 		.album-cover {
 			.transition(width 0.3s ease-in-out);
 			.make-xs-column(3);
-			.make-sm-column(5);
+			.make-sm-column(4);
 
 			.small& {
-				.transition(width 0.3s ease-in-out  0.3s);
+				.transition(all 0.3s ease-in-out  0.3s);
 				.make-sm-column(1);
 				margin-bottom: 0;
 
@@ -808,7 +808,7 @@ h1,h2,h3,h4,h5,h6 {
 
 		.song-info-wrapper {
 			.transition(all 0.3s ease-in-out);
-			.make-sm-column(7);
+			.make-sm-column(8);
 			padding-bottom: @font-size-base * 3;
 
 			@media screen and (max-width: @screen-xs-max){
@@ -846,6 +846,11 @@ h1,h2,h3,h4,h5,h6 {
 	font-size: @font-size-base * 2;
 	text-indent: -0.6rem;
 	margin-bottom: 1rem;
+    .transition(margin 0.3s ease-in-out  0.3s);
+
+    .small & {
+        margin-bottom: 0;
+    }
 
 	@media screen and (max-width: @screen-xs-max){
 		font-size: @font-size-base * 1.5;
@@ -1146,7 +1151,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .fixed-controls {
-	background: #fff;
+	background: @blue-darker;
 	position: fixed;
 	padding-bottom: 5rem;
 	left: 0;
@@ -1414,7 +1419,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .playlist-filters {
-	background-color: @white;
+	background-color: @blue-darker;
 	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
 	-webkit-backface-visibility: hidden; // prevent flickering of bar on scroll in Chrome/Safari
@@ -1426,6 +1431,7 @@ h1,h2,h3,h4,h5,h6 {
 	padding-bottom: 3rem;
 
 	.playlist-filters-wrapper {
+        background: #fff;
 		padding: @grid-gutter-width @grid-gutter-width 0;
 		margin: 0 auto;
 	}

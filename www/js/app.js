@@ -184,7 +184,7 @@ var toTitleCase = function(str) {
  */
 var onHashInit = function(newHash, oldHash) {
     if (newHash !== '') {
-        selectedTag = newHash.replace('-', ' ');
+        selectedTag = newHash.replace(/[-]/g, ' ');
         selectedTag = toTitleCase(selectedTag);
         var buttonText = selectedTag;
         firstReviewerSong = true;
@@ -318,7 +318,7 @@ var playIntroAudio = function() {
 
     $playerTitle.addClass('no-quotes');
     $playerArtist.text('');
-    $playerTitle.text('');
+    $playerTitle.addClass('no-quotes').text('');
 
     if (!NO_AUDIO){
         $audioPlayer.jPlayer('play');
@@ -403,22 +403,8 @@ var playNextSong = function() {
 
         firstReviewerSong = false;
 
-        // check if we can play the song legally (4 times per 3 hours)
-        // if we don't have a song, get a new playlist
-        if (nextSong) {
-            var canPlaySong = checkSongHistory(nextSong);
-            if (!canPlaySong) {
-                return;
-            }
-        } else {
-            nextPlaylist();
-            return;
-        }
-
         var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
     }
-
-
 
     var context = $.extend(APP_CONFIG, nextSong, {
         'showQuotes': nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'].match('‘') ? false : true,
@@ -916,7 +902,6 @@ var onReviewerClick = function(e) {
     e.preventDefault();
 
     var reviewer = $(this).data('tag');
-    console.log(reviewer);
     firstReviewerSong = true;
     switchTag(reviewer);
     toggleFilterPanel();
@@ -1043,6 +1028,7 @@ var hideWelcome  = function() {
         begin: function() {
             $('.landing-wrapper').hide().css('height', '');
             $(this).find('.tip-three').removeClass('show');
+            $('.tips').fadeOut();
             $(this).find('.done').velocity('fadeIn', {
                 delay: 500
             });
@@ -1127,7 +1113,7 @@ var onGoCleanButtonClick = function(e) {
     e.preventDefault();
 
     playExplicit = false;
-    simpleStorage.set('playExplicit', playExplicit);
+    simpleStorage.set('songs15MidYearPlayExplicit', playExplicit);
 
     $languageToggle.find('input[value="clean"]').button('toggle');
     $languageToggle.find('.clean').addClass('active');
