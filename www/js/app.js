@@ -67,7 +67,7 @@ var is_small_screen = false
 var inPreroll = false;
 var firstReviewerSong = false;
 var playExplicit = true;
-var adCounter = null;
+var adCounter = 0;
 var renderAd = false;
 var reviewerDeepLink = false;
 var nextAdTime = null;
@@ -377,13 +377,11 @@ var playNextSong = function() {
 
         nextAdTime = moment().add(1,'h');
         adCounter++;
-        simpleStorage.set('songs15MidYearAdCounter', adCounter);
 
         ANALYTICS.trackEvent('render-ad');
     } else {
         renderAd = false;
         adCounter++;
-        simpleStorage.set('songs15MidYearAdCounter', adCounter);
 
         // if this is the first song in a curator playlist
         // get one reviewed by the curator
@@ -758,7 +756,6 @@ var loadState = function() {
     selectedTag = simpleStorage.get('songs15MidYearSelectedTag') || null;
     usedSkips = simpleStorage.get('songs15MidYearUsedSkips') || [];
     totalSongsPlayed = simpleStorage.get('songs15MidYearTotalSongsPlayed') || 0;
-    adCounter = simpleStorage.get('songs15MidYearAdCounter') || 0;
     songHistory = simpleStorage.get('songs15MidYearSongHistory') || {};
 
     playExplicit = simpleStorage.get('songs15MidYearPlayExplicit') !== undefined ? simpleStorage.get('songs15MidYearPlayExplicit') : true;
