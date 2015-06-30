@@ -756,8 +756,8 @@ var writeSkipsRemaining = function() {
 var loadState = function() {
     playedSongs = simpleStorage.get('songs15MidYearPlayedSongs') || [];
     selectedTag = simpleStorage.get('songs15MidYearSelectedTag') || null;
-    usedSkips = simpleStorage.get('songs15MidYearusedSkips') || [];
-    totalSongsPlayed = simpleStorage.get('songs15MidYeartotalSongsPlayed') || 0;
+    usedSkips = simpleStorage.get('songs15MidYearUsedSkips') || [];
+    totalSongsPlayed = simpleStorage.get('songs15MidYearTotalSongsPlayed') || 0;
     adCounter = simpleStorage.get('songs15MidYearAdCounter') || 0;
     songHistory = simpleStorage.get('songs15MidYearSongHistory') || {};
 
