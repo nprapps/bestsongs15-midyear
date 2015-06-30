@@ -406,6 +406,18 @@ var playNextSong = function() {
         var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
     }
 
+    // check if we can play the song legally (4 times per 3 hours)
+    // if we don't have a song, get a new playlist
+    if (nextSong) {
+        var canPlaySong = checkSongHistory(nextSong);
+        if (!canPlaySong) {
+            return;
+        }
+    } else {
+        nextPlaylist();
+        return;
+    }
+
     var context = $.extend(APP_CONFIG, nextSong, {
         'showQuotes': nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'].match('‘') ? false : true,
         'mixtapeName': makeMixtapeName(nextSong)
