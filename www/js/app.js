@@ -1031,6 +1031,7 @@ var hideWelcome  = function() {
         begin: function() {
             $('.landing-wrapper').hide().css('height', '');
             $(this).find('.tip-three').removeClass('show');
+            $('.tips').fadeOut();
             $(this).find('.done').velocity('fadeIn', {
                 delay: 500
             });
