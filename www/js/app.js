@@ -180,7 +180,7 @@ var toTitleCase = function(str) {
  */
 var onHashInit = function(newHash, oldHash) {
     if (newHash !== '') {
-        selectedTag = newHash.replace('-', ' ');
+        selectedTag = newHash.replace(/[-]/g, ' ');
         selectedTag = toTitleCase(selectedTag);
         var buttonText = selectedTag;
         firstReviewerSong = true;
