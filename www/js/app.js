@@ -606,6 +606,8 @@ var updateTotalSongsPlayed = function() {
     simpleStorage.set('songs15MidYearTotalSongsPlayed', totalSongsPlayed);
 
     ANALYTICS.trackEvent('song-played', currentSong['artist'] + ' - ' + currentSong['title']);
+    ANALYTICS.trackEvent('session-songs-played', sessionSongsPlayed);
+    ANALYTICS.trackEvent('total-songs-played', totalSongsPlayed);
 }
 
 /*
