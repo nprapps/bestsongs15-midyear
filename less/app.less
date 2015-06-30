@@ -787,7 +787,7 @@ h1,h2,h3,h4,h5,h6 {
 			.make-sm-column(4);
 
 			.small& {
-				.transition(width 0.3s ease-in-out  0.3s);
+				.transition(all 0.3s ease-in-out  0.3s);
 				.make-sm-column(1);
 				margin-bottom: 0;
 
@@ -846,6 +846,11 @@ h1,h2,h3,h4,h5,h6 {
 	font-size: @font-size-base * 2;
 	text-indent: -0.6rem;
 	margin-bottom: 1rem;
+    .transition(margin 0.3s ease-in-out  0.3s);
+
+    .small & {
+        margin-bottom: 0;
+    }
 
 	@media screen and (max-width: @screen-xs-max){
 		font-size: @font-size-base * 1.5;
