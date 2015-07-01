@@ -1056,7 +1056,7 @@ var hideWelcome  = function() {
                 delay: 4000,
                 duration: 1000,
                 complete: function() {
-                    $('.poster').removeClass('shrink').attr('style','');
+                    $landing.find('.poster').removeClass('shrink').attr('style','');
                 }
             });
         }
