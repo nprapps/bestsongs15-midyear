@@ -44,6 +44,9 @@ var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var RESET_STATE = (window.location.search.indexOf('resetstate') >= 0);
 var ALL_HISTORY = (window.location.search.indexOf('allhistory') >= 0);
 
+// Constants
+var AD_FREQUENCY = 2;
+
 // Global state
 var firstShareLoad = true;
 var playedSongs = [];
@@ -64,6 +67,7 @@ var is_small_screen = false
 var inPreroll = false;
 var firstReviewerSong = false;
 var playExplicit = true;
+var adCounter = 0;
 var renderAd = false;
 var reviewerDeepLink = false;
 var nextAdTime = null;
@@ -311,6 +315,8 @@ var playIntroAudio = function() {
     $audioPlayer.jPlayer('setMedia', {
         mp3: 'http://podcastdownload.npr.org/anon.npr-mp3' + audioFile
     });
+
+    $playerTitle.addClass('no-quotes');
     $playerArtist.text('');
     $playerTitle.addClass('no-quotes').text('');
 
@@ -359,38 +365,57 @@ var onSkipIntroClick = function(e) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
-    // if this is the first song in a curator playlist
-    // get one reviewed by the curator
-    var nextSong = _.find(playlist, function(song) {
-        if (!firstReviewerSong) {
-            return !(_.contains(playedSongs, song['id']));
-        } else {
-            return !(_.contains(playedSongs, song['id'])) && song['reviewer'] === selectedTag;
+    // load ad data if ad frequency count is reached
+    // increment counter and load song data if not
+    if (adCounter === 2 || moment().isAfter(nextAdTime)) {
+        renderAd = true;
+        var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/miller_ad.mp3';
+        var nextSong = {
+            'artist': 'NPR thanks our sponsors',
+            'title': 'Miller High Life'
         }
-    });
 
-    // some mixtape curators have not reviewed anything
-    // in this case, just use the normal filter
-    if (firstReviewerSong && !nextSong) {
+        nextAdTime = moment().add(1,'h');
+        adCounter++;
+
+        ANALYTICS.trackEvent('render-ad');
+    } else {
+        renderAd = false;
+        adCounter++;
+
+        // if this is the first song in a curator playlist
+        // get one reviewed by the curator
         var nextSong = _.find(playlist, function(song) {
-            return !(_.contains(playedSongs, song['id']));
+            if (!firstReviewerSong) {
+                return !(_.contains(playedSongs, song['id']));
+            } else {
+                return !(_.contains(playedSongs, song['id'])) && song['reviewer'] === selectedTag;
+            }
         });
-    }
 
-    firstReviewerSong = false;
+        // some mixtape curators have not reviewed anything
+        // in this case, just use the normal filter
+        if (firstReviewerSong && !nextSong) {
+            var nextSong = _.find(playlist, function(song) {
+                return !(_.contains(playedSongs, song['id']));
+            });
+        }
 
-    var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
+        firstReviewerSong = false;
 
-    // check if we can play the song legally (4 times per 3 hours)
-    // if we don't have a song, get a new playlist
-    if (nextSong) {
-        var canPlaySong = checkSongHistory(nextSong);
-        if (!canPlaySong) {
+        // check if we can play the song legally (4 times per 3 hours)
+        // if we don't have a song, get a new playlist
+        if (nextSong) {
+            var canPlaySong = checkSongHistory(nextSong);
+            if (!canPlaySong) {
+                return;
+            }
+        } else {
+            nextPlaylist();
             return;
         }
-    } else {
-        nextPlaylist();
-        return;
+
+        var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
     }
 
     var context = $.extend(APP_CONFIG, nextSong, {
@@ -398,8 +423,11 @@ var playNextSong = function() {
         'mixtapeName': makeMixtapeName(nextSong)
     });
 
-
-    var $html = $(JST.song(context));
+    if (renderAd === true) {
+        var $html = $(JST.ad(context));
+    } else {
+        var $html = $(JST.song(context));
+    }
     $songs.append($html);
 
     $playerArtist.html(nextSong['artist']);
@@ -446,7 +474,12 @@ var playNextSong = function() {
                 $html.prev().find('.container-fluid').css('height', '0');
                 $html.prev().find('.song-info').css('min-height', 0);
                 $html.prev().css('min-height', '0');
-                $html.prev().addClass('small');
+
+                if ($html.prev().hasClass('ad')) {
+                    $html.prev().addClass('is-hidden');
+                } else {
+                    $html.prev().addClass('small');
+                }
 
                 $html.css('min-height', songHeight)
                     .velocity('fadeIn', {
@@ -473,8 +506,11 @@ var playNextSong = function() {
 
     currentSong = nextSong;
 
-    markSongPlayed(currentSong);
-    updateTotalSongsPlayed();
+    if (renderAd === false) {
+        markSongPlayed(currentSong);
+        updateTotalSongsPlayed();
+    }
+
     writeSkipsRemaining();
     preloadSongImages();
 }
@@ -570,6 +606,8 @@ var updateTotalSongsPlayed = function() {
     simpleStorage.set('songs15MidYearTotalSongsPlayed', totalSongsPlayed);
 
     ANALYTICS.trackEvent('song-played', currentSong['artist'] + ' - ' + currentSong['title']);
+    ANALYTICS.trackEvent('session-songs-played', sessionSongsPlayed);
+    ANALYTICS.trackEvent('total-songs-played', totalSongsPlayed);
 }
 
 /*
@@ -580,6 +618,14 @@ var onPlayClick = function(e) {
     $audioPlayer.jPlayer('play');
     $play.hide();
     $pause.show();
+
+    // Increase time until next ad will display by amount of time player is paused
+    if (pausedTime !== null && nextAdTime !== null) {
+        var elapsedTime = moment().subtract(pausedTime);
+        nextAdTime = nextAdTime.add(elapsedTime);
+
+        pausedTime = null;
+    }
 }
 
 /*
@@ -590,6 +636,8 @@ var onPauseClick = function(e) {
     $audioPlayer.jPlayer('pause');
     $pause.hide();
     $play.show();
+
+    pausedTime = moment();
 }
 
 /*
@@ -733,6 +781,7 @@ var loadState = function() {
 
     if (playedSongs.length > 0) {
         buildListeningHistory();
+        ANALYTICS.trackEvent('resumed-session');
     }
 
     if (playedSongs.length > 0 || selectedTag !== null) {
@@ -751,10 +800,7 @@ var resetState = function() {
     playedSongs = [];
     selectedTag = null;
 
-    simpleStorage.set('songs15MidYearPlayedSongs', playedSongs);
-    simpleStorage.set('songs15MidYearSelectedTag', selectedTag);
-    simpleStorage.set('songs15MidYearPlayedPreroll', false);
-    simpleStorage.set('songs15MidYearPlayExplicit', true);
+    simpleStorage.flush();
 }
 
 /*
@@ -782,10 +828,13 @@ var markSongPlayed = function(song) {
 var buildListeningHistory = function() {
     for (var i = 0; i < playedSongs.length; i++) {
         var songID = playedSongs[i];
-
         var song = _.find(SONG_DATA, function(song) {
             return songID === song['id']
         });
+
+        if (song === undefined) {
+            continue;
+        }
 
         var context = $.extend(APP_CONFIG, song, {
             'showQuotes': song['title'].match(':') && song['title'].match('’') && song['title'].match('‘') ? false : true,
@@ -871,7 +920,6 @@ var onReviewerClick = function(e) {
     e.preventDefault();
 
     var reviewer = $(this).data('tag');
-    console.log(reviewer);
     firstReviewerSong = true;
     switchTag(reviewer);
     toggleFilterPanel();
@@ -1011,7 +1059,7 @@ var hideWelcome  = function() {
                 delay: 4000,
                 duration: 1000,
                 complete: function() {
-                    $('.poster').removeClass('shrink').attr('style','');
+                    $landing.find('.poster').removeClass('shrink').attr('style','');
                 }
             });
         }

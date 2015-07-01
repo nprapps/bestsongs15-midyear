@@ -58,6 +58,10 @@ def clean_songs(verify):
         rows = csv.DictReader(f)
 
         for row in rows:
+            if row['retracted'] == '1':
+                print 'RETRACTED: %s - %s' % (row['artist'], row['title'])
+                continue
+
             stripped_row = {}
 
             for name, value in row.items():
