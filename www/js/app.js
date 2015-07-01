@@ -828,10 +828,13 @@ var markSongPlayed = function(song) {
 var buildListeningHistory = function() {
     for (var i = 0; i < playedSongs.length; i++) {
         var songID = playedSongs[i];
-
         var song = _.find(SONG_DATA, function(song) {
             return songID === song['id']
         });
+
+        if (song === undefined) {
+            continue;
+        }
 
         var context = $.extend(APP_CONFIG, song, {
             'showQuotes': song['title'].match(':') && song['title'].match('’') && song['title'].match('‘') ? false : true,

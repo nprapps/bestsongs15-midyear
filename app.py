@@ -37,6 +37,9 @@ def index():
         context['song_data'] = f.read()
         context['total_songs'] = len(json.loads(context['song_data']))
 
+    with open('data/retracted.json') as f:
+        context['retracted_songs'] = f.read()
+
     return make_response(render_template('index.html', **context))
 
 @app.route('/seamus')
