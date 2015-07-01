@@ -403,18 +403,14 @@ var playNextSong = function() {
 
         firstReviewerSong = false;
 
-        console.log(nextSong);
-
         // check if we can play the song legally (4 times per 3 hours)
         // if we don't have a song, get a new playlist
         if (nextSong) {
             var canPlaySong = checkSongHistory(nextSong);
             if (!canPlaySong) {
-                console.log('can\'t play song')
                 return;
             }
         } else {
-            console.log('new playlist')
             nextPlaylist();
             return;
         }
