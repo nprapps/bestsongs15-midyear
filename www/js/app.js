@@ -403,19 +403,23 @@ var playNextSong = function() {
 
         firstReviewerSong = false;
 
-        var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
+        console.log(nextSong);
 
         // check if we can play the song legally (4 times per 3 hours)
         // if we don't have a song, get a new playlist
         if (nextSong) {
             var canPlaySong = checkSongHistory(nextSong);
             if (!canPlaySong) {
+                console.log('can\'t play song')
                 return;
             }
         } else {
+            console.log('new playlist')
             nextPlaylist();
             return;
         }
+
+        var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
     }
 
     var context = $.extend(APP_CONFIG, nextSong, {
